@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/optionSignOut"
+        android:title="@string/sign_out"
+        />
+
+    <item
+        android:id="@+id/optionAccountSettings"
+        android:title="@string/account_settings"
+        />
+
+    <item
+        android:id="@+id/optionChat"
+        android:title="@string/chat"
+        />
+
+    <item
+        android:id="@+id/optionAdmin"
+        android:title="@string/string_admin"
+        />
+
+</menu>

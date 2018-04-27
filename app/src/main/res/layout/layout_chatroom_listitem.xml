@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:padding="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_border"
+        android:id="@+id/layout_container">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relLayout1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/profile_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_android"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/creator_name"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_toLeftOf="@+id/icon_trash"
+                android:textColor="@color/DarkGrey"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_centerVertical="true"
+                android:textSize="13sp"/>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/icon_trash"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_trash"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relLayout1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/number_chatmessages"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/Black"
+                android:id="@+id/name"
+                android:layout_toLeftOf="@+id/number_chatmessages"
+                android:layout_alignParentLeft="true"/>
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="25dp"
+                android:layout_below="@+id/name"
+                android:textSize="10sp"
+                android:text="leave"
+                android:background="@drawable/red_onclick_grey"
+                android:textColor="@color/White"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:id="@+id/leave_chat"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+

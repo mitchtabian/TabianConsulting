@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+                android:background="@android:color/white">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="@string/employee_dashboard"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/Black"
+        android:id="@+id/header"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:id="@+id/relLayout0"
+        android:padding="20dp"
+        android:layout_marginTop="20dp">
+
+    <!-- This weeks initiatives -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relLayout1">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_initiatives"
+            android:id="@+id/icon_initiatives"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_initiatives"
+            android:textSize="15sp"
+            android:text="@string/this_week_s_initiatives"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/Black"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+
+    <!-- Scheduling -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relLayout2"
+        android:layout_below="@id/relLayout1"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_schedule"
+            android:id="@+id/icon_scheduling"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_scheduling"
+            android:textSize="15sp"
+            android:text="@string/employee_schedule"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/Black"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <!-- Culture -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relLayout3"
+        android:layout_below="@id/relLayout2"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_culture"
+            android:id="@+id/icon_culture"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_culture"
+            android:textSize="15sp"
+            android:text="@string/company_culture"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/Black"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/profit_chart"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/relLayout0"
+        android:contentDescription="@string/tabian_consulting_sales_chart"/>
+
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,115 @@
+<resources>
+    <string name="app_name">Tabian Consulting</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="resend_verification_email">Resend Verification Email</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="register">Register</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="tabian_consulting_logo">Tabian Consulting Logo</string>
+    <string name="email_registration">Email Registration</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="employee_dashboard">Employee Dashboard</string>
+    <string name="this_week_s_initiatives">This week\'s initiatives</string>
+    <string name="employee_schedule">Employee Schedule</string>
+    <string name="company_culture">Company Culture</string>
+    <string name="tabian_consulting_sales_chart">Tabian Consulting Sales Chart</string>
+    <string name="cancel">CANCEL</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="sign_out">Sign out</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="first_and_last_name">First and last name</string>
+    <string name="save">Save</string>
+    <string name="change_password">Change Password</string>
+    <string name="primary_phone_contact">Primary phone contact #</string>
+    <string name="chat">Chat</string>
+
+
+    <!-- FCM Related String -->
+    <string name="default_notification_channel_id" translatable="false">courses.pluralsight.com.tabianconsulting.default_notification_channel_id</string>
+    <string name="default_notification_channel_name" translatable="true">courses.pluralsight.com.tabianconsulting.default_notification_channel_name</string>
+    <string name="data_type_chat_message">data_type_chat_message</string>
+    <string name="data_type_admin_broadcast">data_type_admin_broadcast</string>
+    <string name="data_title">title</string>
+    <string name="data_type">data_type</string>
+    <string name="data_message">message</string>
+    <string name="data_chatroom_id">chatroom_id</string>
+    <string name="reply_label">intent_data_payload</string>
+    <string name="label">new message...</string>
+
+    <!-- Intent Extras -->
+    <string name="intent_chatroom">intent_chatroom</string>
+    <string name="intent_data_payload">intent_data_payload</string>
+    <string name="intent_message">intent_data_payload</string>
+
+    <!-- Dialog Names -->
+    <string name="dialog_change_photo">ChangePhotoDialog</string>
+    <string name="dialog_new_chatroom">NewChatroomDialog</string>
+    <string name="dialog_delete_chatroom">DeleteChatroomDialog</string>
+    <string name="dialog_add_department">AddDepartmentDialog</string>
+
+
+    <!-- Firebase Database Nodes -->
+    <string name="dbnode_users">users</string>
+    <string name="dbnode_chatrooms">chatrooms</string>
+    <string name="dbnode_departments">departments</string>
+    <string name="dbnode_server">server</string>
+
+
+    <!-- Firebase Database Fields -->
+    <string name="field_chatroom_name">chatroom_name</string>
+    <string name="field_creator_id">creator_id</string>
+    <string name="field_security_level">security_level</string>
+    <string name="field_email">email</string>
+    <string name="field_name">name</string>
+    <string name="field_phone">phone</string>
+    <string name="field_profile_image">profile_image</string>
+    <string name="field_user_id">user_id</string>
+    <string name="field_chatroom_id">chatroom_id</string>
+    <string name="field_chatroom_messages">chatroom_messages</string>
+    <string name="field_message">message</string>
+    <string name="field_timestamp">timestamp</string>
+    <string name="field_messaging_token">messaging_token</string>
+    <string name="field_department">department</string>
+    <string name="field_server_key">server_key</string>
+    <string name="field_users">users</string>
+    <string name="field_last_message_seen">last_message_seen</string>
+
+
+    <!-- Strings -->
+    <string name="alert_dialog_delete">DELETE</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="string_admin">Admin</string>
+
+
+</resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
