@@ -7,6 +7,8 @@
     <color name="red1">#af0a0a</color>
     <color name="red2">#c40909</color>
     <color name="red3">#e50909</color>
+    <color name="orange1">#FF8333</color>
+    <color name="green1">#29CF40</color>
     <color name="blue1">#66a3ff</color>
     <color name="blue2">#0033cc</color>
     <color name="linkBlue">#4d94ff</color>
@@ -17,6 +19,7 @@
     <color name="darkGrey">#a6a6a6 </color>
     <color name="Grey">#c3c3c3 </color>
     <color name="lightGrey">#f2f2f2 </color>
+    <color name="transparentGrey">#8f737373 </color>
     <color name="DarkGrey">#737373 </color>
     <color name="Black">#000 </color>
 

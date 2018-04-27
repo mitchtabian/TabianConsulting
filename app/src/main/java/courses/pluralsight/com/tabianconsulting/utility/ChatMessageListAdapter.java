@@ -29,6 +29,7 @@ import courses.pluralsight.com.tabianconsulting.R;
 import courses.pluralsight.com.tabianconsulting.models.ChatMessage;
 import courses.pluralsight.com.tabianconsulting.models.Chatroom;
 import courses.pluralsight.com.tabianconsulting.models.User;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by User on 9/18/2017.
@@ -48,8 +49,8 @@ public class ChatMessageListAdapter extends ArrayAdapter<ChatMessage> {
     }
 
     public static class ViewHolder{
-        TextView name, message;
-        ImageView mProfileImage;
+        TextView message;
+        CircleImageView mProfileImage;
     }
 
     @NonNull
@@ -63,14 +64,12 @@ public class ChatMessageListAdapter extends ArrayAdapter<ChatMessage> {
             convertView = inflater.inflate(mLayoutResource, parent, false);
             holder = new ViewHolder();
 
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.message = (TextView) convertView.findViewById(R.id.message);
-            holder.mProfileImage = (ImageView) convertView.findViewById(R.id.profile_image);
+            holder.message = convertView.findViewById(R.id.message);
+            holder.mProfileImage = convertView.findViewById(R.id.profile_image);
 
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
-            holder.name.setText("");
             holder.message.setText("");
         }
 
@@ -78,8 +77,6 @@ public class ChatMessageListAdapter extends ArrayAdapter<ChatMessage> {
             //set the message
             holder.message.setText(getItem(position).getMessage());
 
-            //set the name
-            holder.name.setText(getItem(position).getName());
 
             //set the image (make sure to prevent the image 'flash')
             if (holder.mProfileImage.getTag() == null ||

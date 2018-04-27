@@ -9,7 +9,9 @@
         android:layout_height="70dp"
         android:id="@+id/profile_image"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_android"/>
+        android:src="@drawable/ic_android"
+        android:layout_marginLeft="1dp"
+        android:layout_marginStart="1dp"/>
 
 
         <RelativeLayout

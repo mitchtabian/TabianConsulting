@@ -40,7 +40,7 @@
     <string name="change_password">Change Password</string>
     <string name="primary_phone_contact">Primary phone contact #</string>
     <string name="chat">Chat</string>
-
+    <string name="issues">Issues</string>
 
     <!-- FCM Related String -->
     <string name="default_notification_channel_id" translatable="false">courses.pluralsight.com.tabianconsulting.default_notification_channel_id</string>
@@ -58,6 +58,13 @@
     <string name="intent_chatroom">intent_chatroom</string>
     <string name="intent_data_payload">intent_data_payload</string>
     <string name="intent_message">intent_data_payload</string>
+    <string name="intent_project">intent_project</string>
+    <string name="intent_attachments">intent_attachments</string>
+    <string name="intent_project_id">intent_project_id</string>
+    <string name="intent_issue_id">intent_issue_id</string>
+    <string name="intent_snackbar_message">intent_snackbar_message</string>
+    <string name="intent_issue">intent_issue</string>
+    <string name="intent_image">intent_image</string>
 
     <!-- Dialog Names -->
     <string name="dialog_change_photo">ChangePhotoDialog</string>
@@ -73,7 +80,7 @@
     <string name="dbnode_server">server</string>
 
 
-    <!-- Firebase Database Fields -->
+    <!-- Firebase Database Fields & Cloud Firestore Fields -->
     <string name="field_chatroom_name">chatroom_name</string>
     <string name="field_creator_id">creator_id</string>
     <string name="field_security_level">security_level</string>
@@ -91,13 +98,62 @@
     <string name="field_server_key">server_key</string>
     <string name="field_users">users</string>
     <string name="field_last_message_seen">last_message_seen</string>
+    <string name="field_avatar">avatar</string>
+    <string name="field_description">description</string>
+    <string name="field_time_created">time_created</string>
+    <string name="field_assignee">assignee</string>
+    <string name="field_issue_type">issue_type</string>
+    <string name="field_priority">priority</string>
+    <string name="field_reporter">reporter</string>
+    <string name="field_status">status</string>
+    <string name="field_summary">summary</string>
+    <string name="field_time_reported">time_reported</string>
+    <string name="field_url">url</string>
+    <string name="field_comment">comment</string>
 
+
+    <!-- Firebase Cloud Firestore Collection/Document names -->
+    <string name="collection_projects">projects</string>
+    <string name="collection_issues">issues</string>
+    <string name="collection_attachments">attachments</string>
+    <string name="collection_comments">comments</string>
+
+
+    <!-- Fragment names -->
+    <string name="fragment_issues">Issues</string>
+    <string name="fragment_projects">Projects</string>
+    <string name="fragment_full_screen">Full Screen</string>
 
     <!-- Strings -->
     <string name="alert_dialog_delete">DELETE</string>
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="string_admin">Admin</string>
-
+    <string name="new_issue">New Issue</string>
+    <string name="create">CREATE</string>
+    <string name="close">close</string>
+    <string name="new_project">New Project</string>
+    <string name="projects_search_hint">Search Projects...</string>
+    <string name="project_name">Project name</string>
+    <string name="description">Description</string>
+    <string name="date_created">Date created</string>
+    <string name="summary">Summary</string>
+    <string name="add_attachment">Add attachment</string>
+    <string name="priority">Priority</string>
+    <string name="assign_to_project">Assign to project</string>
+    <string name="select_a_project">Select a project</string>
+    <string name="required">Required</string>
+    <string name="created_new_issue">Created new issue</string>
+    <string name="failed_to_create_new_issue">Failed to create new issue</string>
+    <string name="created_new_project">Created new project</string>
+    <string name="issue_edit_success">Issue Edit Success</string>
+    <string name="issue_edit_fail">Issue Edit Failed</string>
+    <string name="project_edit_success">Project Edit Success</string>
+    <string name="project_edit_fail">Project Edit Failed</string>
+    <string name="failed_create_new_project">Failed to create new project</string>
+    <string name="admin_broadcast">Admin Broadcast</string>
+    <string name="issue_details">Issue Details</string>
+    <string name="assignee">Assignee</string>
+    <string name="issue_type">Issue Type</string>
 
 </resources>
 

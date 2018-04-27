@@ -43,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:layout_marginTop="20dp"
-                android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
@@ -106,8 +105,8 @@
     </ScrollView>
 
     <ProgressBar
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/progressBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"

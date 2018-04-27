@@ -7,7 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -193,7 +195,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 				.setStyle(new NotificationCompat.BigTextStyle()
 						.bigText("New messages in " + chatroom.getChatroom_name()).setSummaryText(message))
 				.setNumber(mNumPendingMessages)
-				.setOnlyAlertOnce(true);
+//				.setOnlyAlertOnce(true)
+		;
 
 		builder.setContentIntent(notifyPendingIntent);
 		NotificationManager mNotificationManager =
@@ -210,8 +213,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 	 * @param message
 	 */
 	private void sendBroadcastNotification(String title, String message){
-		Log.d(TAG, "sendBroadcastNotification: building a admin broadcast notification");
-
+		Log.d(TAG, "sendBroadcastNotification: building an admin broadcast notification");
 
 		// Instantiate a Builder object.
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
@@ -237,14 +239,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 				.setContentTitle(title)
 				.setContentText(message)
 				.setColor(getColor(R.color.blue4))
-		.setAutoCancel(true);
+				.setAutoCancel(true);
 
 		builder.setContentIntent(notifyPendingIntent);
 		NotificationManager mNotificationManager =
 				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 		mNotificationManager.notify(BROADCAST_NOTIFICATION_ID, builder.build());
-
 	}
 
 	private int buildNotificationId(String id){
