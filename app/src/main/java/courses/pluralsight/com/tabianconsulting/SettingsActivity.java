@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -49,7 +50,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -72,17 +76,6 @@ public class SettingsActivity extends AppCompatActivity implements
             ImageLoader.getInstance().displayImage(imagePath.toString(), mProfileImage);
         }
 
-    }
-
-    @Override
-    public void getImageBitmap(Bitmap bitmap) {
-        if(bitmap != null){
-            mSelectedImageUri = null;
-            mSelectedImageBitmap = bitmap;
-            Log.d(TAG, "getImageBitmap: got the image bitmap: " + mSelectedImageBitmap);
-
-            mProfileImage.setImageBitmap(bitmap);
-        }
     }
 
 
@@ -279,36 +272,42 @@ public class SettingsActivity extends AppCompatActivity implements
         protected void onPreExecute() {
             super.onPreExecute();
             showDialog();
-            Toast.makeText(SettingsActivity.this, "compressing image", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         protected byte[] doInBackground(Uri... params ) {
             Log.d(TAG, "doInBackground: started.");
 
-            if(mBitmap == null){
-
+            if (mBitmap == null) {
+                InputStream iStream = null;
                 try {
-                    mBitmap = MediaStore.Images.Media.getBitmap(SettingsActivity.this.getContentResolver(), params[0]);
-                    Log.d(TAG, "doInBackground: bitmap size: megabytes: " + mBitmap.getByteCount()/MB + " MB");
-                } catch (IOException e) {
-                    Log.e(TAG, "doInBackground: IOException: ", e.getCause());
+                    iStream = SettingsActivity.this.getContentResolver().openInputStream(params[0]);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
-            }
+                ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+                int bufferSize = 1024;
+                byte[] buffer = new byte[bufferSize];
 
-            byte[] bytes = null;
-            for (int i = 1; i < 11; i++){
-                if(i == 10){
-                    Toast.makeText(SettingsActivity.this, "That image is too large.", Toast.LENGTH_SHORT).show();
-                    break;
+                int len = 0;
+                try {
+                    while ((len = iStream.read(buffer)) != -1) {
+                        byteBuffer.write(buffer, 0, len);
+                    }
+                    iStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                bytes = getBytesFromBitmap(mBitmap,100/i);
-                Log.d(TAG, "doInBackground: megabytes: (" + (11-i) + "0%) "  + bytes.length/MB + " MB");
-                if(bytes.length/MB  < MB_THRESHHOLD){
-                    return bytes;
-                }
+
+                return byteBuffer.toByteArray();
+            } else {
+                int size = mBitmap.getRowBytes() * mBitmap.getHeight();
+                ByteBuffer byteBuffer = ByteBuffer.allocate(size);
+                mBitmap.copyPixelsToBuffer(byteBuffer);
+                byte[] bytes = byteBuffer.array();
+                byteBuffer.rewind();
+                return bytes;
             }
-            return bytes;
         }
 
 
@@ -332,7 +331,7 @@ public class SettingsActivity extends AppCompatActivity implements
     private void executeUploadTask(){
         showDialog();
         FilePaths filePaths = new FilePaths();
-//specify where the photo will be stored
+        //specify where the photo will be stored
         final StorageReference storageReference = FirebaseStorage.getInstance().getReference()
                 .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid()
                         + "/profile_image"); //just replace the old image with the new one
@@ -362,7 +361,7 @@ public class SettingsActivity extends AppCompatActivity implements
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     //Now insert the download url into the firebase database
                     Uri firebaseURL = taskSnapshot.getDownloadUrl();
-                    Toast.makeText(SettingsActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SettingsActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onSuccess: firebase download url : " + firebaseURL.toString());
                     FirebaseDatabase.getInstance().getReference()
                             .child(getString(R.string.dbnode_users))
@@ -387,7 +386,7 @@ public class SettingsActivity extends AppCompatActivity implements
                     if(currentProgress > (progress + 15)){
                         progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                         Log.d(TAG, "onProgress: Upload is " + progress + "% done");
-                        Toast.makeText(SettingsActivity.this, progress + "%", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SettingsActivity.this, progress + "%", Toast.LENGTH_SHORT).show();
                     }
 
                 }

@@ -6,6 +6,13 @@
         <item name="colorPrimary">@color/blue4</item>
         <item name="colorPrimaryDark">@color/blue5</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="actionMenuTextColor">@color/White</item>-->
+        <!--<item name="android:actionMenuTextColor">@color/White</item>-->
+    </style>
+
+    <style name="ProjectSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@color/White</item>
+        <item name="android:queryHint">@string/projects_search_hint</item>
     </style>
 
 </resources>

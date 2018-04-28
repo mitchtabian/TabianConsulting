@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/TabianConsulting.iml" filepath="$PROJECT_DIR$/TabianConsulting.iml" />
+      <module fileurl="file://F:\AndroidStudio Projects\TabianConsulting\TabianConsulting.iml" filepath="F:\AndroidStudio Projects\TabianConsulting\TabianConsulting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\AndroidStudio Projects\TabianConsulting\app\app.iml" filepath="F:\AndroidStudio Projects\TabianConsulting\app\app.iml" />
+    </modules>
+  </component>
+</project>

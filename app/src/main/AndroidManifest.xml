@@ -6,16 +6,29 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
 
         <service
             android:name=".utility.MyFirebaseMessagingService">
@@ -41,8 +54,9 @@
         <activity android:name=".SignedInActivity"/>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".ChatActivity"/>
-        <activity android:name=".ChatroomActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ChatroomActivity"/>
         <activity android:name=".AdminActivity"/>
+        <activity android:name=".issues.IssuesActivity" android:windowSoftInputMode="adjustPan"/>
 
 
     </application>

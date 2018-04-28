@@ -1,9 +1,6 @@
 package courses.pluralsight.com.tabianconsulting;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,9 +19,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import courses.pluralsight.com.tabianconsulting.issues.IssuesActivity;
 import courses.pluralsight.com.tabianconsulting.models.Chatroom;
 import courses.pluralsight.com.tabianconsulting.models.User;
 import courses.pluralsight.com.tabianconsulting.utility.UniversalImageLoader;
@@ -179,7 +176,11 @@ public class SignedInActivity extends AppCompatActivity{
                 }else{
                     Toast.makeText(this, "You're not an Admin", Toast.LENGTH_SHORT).show();
                 }
+                return true;
 
+            case R.id.optionIssues:
+                intent = new Intent(SignedInActivity.this, IssuesActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

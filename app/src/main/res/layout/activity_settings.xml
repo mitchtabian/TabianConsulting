@@ -62,7 +62,9 @@
                         android:layout_marginLeft="40dp"
                         android:background="@null"
                         android:hint="First and last name"
-                        android:textColor="@color/Black"/>
+                        android:textColor="@color/Black"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
 
                 </RelativeLayout>
 
@@ -89,7 +91,8 @@
                         android:background="@null"
                         android:inputType="phone"
                         android:hint="Primary contact phone #"
-                        android:textColor="@color/Black"/>
+                        android:textColor="@color/Black"
+                        android:imeOptions="actionNext"/>
 
                 </RelativeLayout>
 
@@ -116,7 +119,8 @@
                         android:background="@null"
                         android:inputType="textEmailAddress"
                         android:hint="Email"
-                        android:textColor="@color/Black"/>
+                        android:textColor="@color/Black"
+                        android:imeOptions="actionNext"/>
 
                 </RelativeLayout>
 
@@ -142,7 +146,8 @@
                         android:background="@null"
                         android:inputType="textPassword"
                         android:hint="Confirm Password"
-                        android:textColor="@color/Black"/>
+                        android:textColor="@color/Black"
+                        android:imeOptions="actionDone"/>
 
                 </RelativeLayout>
 

@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "courses.pluralsight.com.tabianconsulting"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -21,46 +21,42 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
     //Android Support Design Library
-    compile 'com.android.support:design:26.+'
-
+    implementation 'com.android.support:design:27.1.1'
     //RecyclerView
-    compile 'com.android.support:recyclerview-v7:26.+'
-
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     //Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     //Retrofit JSON
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     //Universal Image Loader
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+    // Firestore
+    implementation 'com.google.firebase:firebase-firestore:15.0.0'
     //Firebase Authentication
-    compile 'com.google.firebase:firebase-auth:11.4.0'
-
+    implementation 'com.google.firebase:firebase-auth:15.0.0'
     //Firebase Realtime Database
-    compile 'com.google.firebase:firebase-database:11.4.0'
-
+    implementation 'com.google.firebase:firebase-database:15.0.0'
     //Firebase Storage
-    compile 'com.google.firebase:firebase-storage:11.4.0'
-
+    implementation 'com.google.firebase:firebase-storage:15.0.0'
     //Firebase Cloud Messaging
-    compile 'com.google.firebase:firebase-messaging:11.4.0'
-
+    implementation 'com.google.firebase:firebase-messaging:15.0.0'
     //Firebase Crashlytics
-    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
-    compile 'com.google.firebase:firebase-core:11.4.0'
-
+    implementation 'com.google.firebase:firebase-core:15.0.0'
 }
 apply plugin: 'com.google.gms.google-services'
