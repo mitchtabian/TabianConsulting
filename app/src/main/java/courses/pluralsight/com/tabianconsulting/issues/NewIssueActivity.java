@@ -69,7 +69,6 @@ public class NewIssueActivity extends AppCompatActivity implements
 
 
     //vars
-    private boolean mStoragePermissions;
     private ArrayList<Project> mProjects = new ArrayList<>();
 
 
