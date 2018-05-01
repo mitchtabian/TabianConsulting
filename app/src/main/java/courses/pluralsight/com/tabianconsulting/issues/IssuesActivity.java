@@ -77,6 +77,7 @@ public class IssuesActivity extends AppCompatActivity implements IIssues {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(getString(R.string.collection_projects))
+                .orderBy(getString(R.string.field_time_created), Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

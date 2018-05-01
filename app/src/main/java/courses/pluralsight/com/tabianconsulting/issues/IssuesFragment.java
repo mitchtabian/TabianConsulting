@@ -147,6 +147,7 @@ public class IssuesFragment extends Fragment implements
             db.collection(getString(R.string.collection_projects))
                     .document(mSelectedProject.getProject_id())
                     .collection(getString(R.string.collection_issues))
+                    .orderBy(getString(R.string.field_priority), Query.Direction.DESCENDING)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
