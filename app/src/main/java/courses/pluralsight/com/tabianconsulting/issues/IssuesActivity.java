@@ -24,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import courses.pluralsight.com.tabianconsulting.R;
+import courses.pluralsight.com.tabianconsulting.models.Project;
 
 /**
  * Created by User on 4/16/2018.
@@ -44,6 +45,7 @@ public class IssuesActivity extends AppCompatActivity implements IIssues {
     private IssuesFragment mIssuesFragment;
     private ProjectsFragment mProjectsFragment;
     private IssuesPagerAdapter mIssuesPagerAdapter;
+    private ArrayList<Project> mProjects = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +63,44 @@ public class IssuesActivity extends AppCompatActivity implements IIssues {
         if(getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+    }
+
+    private void queryProjects(){
+
+        showProgressBar();
+
+        if(mProjects != null){
+            if(mProjects.size() > 0){
+                mProjects.clear();
+            }
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(getString(R.string.collection_projects))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Project project = document.toObject(Project.class);
+                                mProjects.add(project);
+                            }
+                        }
+                        else {
+                            Log.d(TAG, "Error getting projects: ", task.getException());
+                            Toast.makeText(IssuesActivity.this, "error retrieving projects", Toast.LENGTH_SHORT).show();
+                        }
+                        hideProgressBar();
+                        updateFragments();
+                    }
+                });
+    }
+
+    private void updateFragments(){
+        mProjectsFragment.updateProjectsList(mProjects);
+        mIssuesFragment.updateProjectsList(mProjects);
     }
 
     private void setupViewPager(){
@@ -101,6 +141,11 @@ public class IssuesActivity extends AppCompatActivity implements IIssues {
     @Override
     public void buildSnackbar(String message) {
         Snackbar.make(getCurrentFocus().getRootView(), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void getProjects() {
+        queryProjects();
     }
 }
 

@@ -15,4 +15,5 @@ public interface IIssues {
 
     void buildSnackbar(String message);
 
+    void getProjects();
 }
