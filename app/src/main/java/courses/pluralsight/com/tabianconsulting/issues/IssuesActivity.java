@@ -29,7 +29,7 @@ import courses.pluralsight.com.tabianconsulting.R;
  * Created by User on 4/16/2018.
  */
 
-public class IssuesActivity extends AppCompatActivity {
+public class IssuesActivity extends AppCompatActivity implements IIssues {
 
     private static final String TAG = "IssuesActivity";
 
@@ -81,6 +81,27 @@ public class IssuesActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void showProgressBar(){
+        if(mProgressBar != null){
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void hideProgressBar(){
+        if(mProgressBar != null){
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            mProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void buildSnackbar(String message) {
+        Snackbar.make(getCurrentFocus().getRootView(), message, Snackbar.LENGTH_LONG).show();
+    }
 }
 
 

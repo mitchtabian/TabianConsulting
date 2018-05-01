@@ -57,6 +57,7 @@
         <activity android:name=".ChatroomActivity"/>
         <activity android:name=".AdminActivity"/>
         <activity android:name=".issues.IssuesActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".issues.NewProjectActivity"/>
 
 
     </application>
