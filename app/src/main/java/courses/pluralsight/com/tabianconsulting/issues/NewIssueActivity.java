@@ -51,8 +51,7 @@ import courses.pluralsight.com.tabianconsulting.utility.SpinnerResource;
  */
 
 public class NewIssueActivity extends AppCompatActivity implements
-        View.OnClickListener,
-        View.OnTouchListener{
+        View.OnClickListener{
 
     private static final String TAG = "NewIssueActivity";
     private static final int REQUEST_CODE = 1234;
@@ -86,13 +85,10 @@ public class NewIssueActivity extends AppCompatActivity implements
 
         mClose.setOnClickListener(this);
         mCreate.setOnClickListener(this);
-        mAssignToProject.setOnTouchListener(this);
 
         setupActionBar();
         initIssueTypeSpinner();
         initPrioritySpinner();
-        initProjectAutoCompleteTextView();
-        verifyStoragePermissions();
     }
 
     private void setupActionBar(){
@@ -101,60 +97,6 @@ public class NewIssueActivity extends AppCompatActivity implements
         }
     }
 
-
-    private void initProjectAutoCompleteTextView(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection(getString(R.string.collection_projects))
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            Log.d(TAG, "onComplete: got projects");
-                            int i = 0;
-                            String[] projects = new String[task.getResult().size()];
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Project project = document.toObject(Project.class);
-                                mProjects.add(project);
-                                projects[i] = project.getName();
-                                i++;
-                            }
-
-                            ArrayAdapter<String> adapter =
-                                    new ArrayAdapter<String>(NewIssueActivity.this, android.R.layout.simple_list_item_1, projects);
-                            mAssignToProject.setAdapter(adapter);
-                            initTextWatcher();
-                        }
-                        else{
-                            Toast.makeText(NewIssueActivity.this, "error getting projects", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "onComplete: error getting project names.", task.getException());
-                        }
-                    }
-                });
-    }
-
-    private void initTextWatcher(){
-        mAssignToProject.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(editable.toString().equals("")){
-                    mAssignToProject.setError(getString(R.string.select_a_project));
-                }
-                else{
-                    mAssignToProject.setError(null);
-                }
-            }
-        });
-    }
 
     private void initIssueTypeSpinner(){
         final String[] issueTypes = SpinnerResource.issue_type_spinner;
@@ -265,19 +207,6 @@ public class NewIssueActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-
-        switch (view.getId()){
-            case R.id.assign_to_project:{
-                showSoftKeyboard(view);
-                mAssignToProject.showDropDown();
-                return true;
-            }
-
-        }
-        return false;
-    }
 
     public void showSoftKeyboard(View view) {
         if (view.requestFocus()) {
@@ -295,29 +224,6 @@ public class NewIssueActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Generalized method for asking permission. Can pass any array of permissions
-     */
-    public void verifyStoragePermissions(){
-        Log.d(TAG, "verifyPermissions: asking user for permissions.");
-        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA};
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                permissions[0] ) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                permissions[1] ) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                permissions[2] ) == PackageManager.PERMISSION_GRANTED) {
-            mStoragePermissions = true;
-        } else {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissions,
-                    REQUEST_CODE
-            );
-        }
-    }
 
 }
 
