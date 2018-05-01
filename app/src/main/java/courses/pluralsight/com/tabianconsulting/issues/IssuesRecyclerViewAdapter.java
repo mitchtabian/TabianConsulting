@@ -112,7 +112,6 @@ public class IssuesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
 
 
-
         public ViewHolder(View itemView) {
             super(itemView);
             icon = itemView.findViewById(R.id.image);

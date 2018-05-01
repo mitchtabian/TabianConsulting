@@ -33,7 +33,8 @@ import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 
 public class ProjectsFragment extends Fragment implements
         View.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener
+        SwipeRefreshLayout.OnRefreshListener,
+        ProjectsRecyclerViewAdapter.RecyclerViewClickListener
 {
 
     private static final String TAG = "ProjectsFragment";
@@ -91,7 +92,7 @@ public class ProjectsFragment extends Fragment implements
     }
 
     private void initRecyclerView(){
-        mProjectsRecyclerViewAdapter = new ProjectsRecyclerViewAdapter(mProjects, getActivity());
+        mProjectsRecyclerViewAdapter = new ProjectsRecyclerViewAdapter(mProjects, getActivity(), this);
         mRecyclerView.setAdapter(mProjectsRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -168,6 +169,13 @@ public class ProjectsFragment extends Fragment implements
         }catch (ClassCastException e){
             Log.e(TAG, "onAttach: Class Cast Exception: " + e.getMessage() );
         }
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        Intent intent = new Intent(getActivity(), ProjectDetailsActivity.class);
+        intent.putExtra(getString(R.string.intent_project), mProjects.get(position));
+        getContext().startActivity(intent);
     }
 }
 

@@ -30,17 +30,19 @@ public class ProjectsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     private ArrayList<Project> mProjects = new ArrayList<>();
     private ArrayList<Project> mFilteredProjects = new ArrayList<>();
     private Context mContext;
+    private RecyclerViewClickListener mRecyclerViewClickListener;
 
-    public ProjectsRecyclerViewAdapter(ArrayList<Project> projects, Context context) {
+    public ProjectsRecyclerViewAdapter(ArrayList<Project> projects, Context context, RecyclerViewClickListener recyclerViewClickListener) {
         mProjects = projects;
         mContext = context;
         mFilteredProjects = projects;
+        mRecyclerViewClickListener = recyclerViewClickListener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_project_list_item, parent, false);
-        final ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view, mRecyclerViewClickListener);
 
 
         return holder;
@@ -106,20 +108,36 @@ public class ProjectsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         };
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements
+    View.OnClickListener{
 
         CircleImageView avatar;
         TextView name, created;
 
+        RecyclerViewClickListener listener;
 
-        public ViewHolder(View itemView) {
+
+        public ViewHolder(View itemView, RecyclerViewClickListener listener) {
             super(itemView);
             avatar = itemView.findViewById(R.id.avatar);
             name = itemView.findViewById(R.id.project_name);
             created = itemView.findViewById(R.id.created);
 
+            this.listener = listener;
+
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            if (listener != null) {
+                listener.onItemClicked(getAdapterPosition());
+            }
+        }
+    }
+
+    public interface RecyclerViewClickListener {
+        public void onItemClicked(int position);
     }
 
 }
