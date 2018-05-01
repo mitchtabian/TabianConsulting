@@ -107,7 +107,6 @@ public class NewIssueActivity extends AppCompatActivity implements
 
         CollectionReference projectsRef = db.collection(getString(R.string.collection_projects));
 
-
         projectsRef
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -213,70 +212,68 @@ public class NewIssueActivity extends AppCompatActivity implements
         else{
             showProgressBar();
 
-//            // Find the Project id
-//            String temp = "";
-//            for(Project project : mProjects){
-//                if(project.getName().equals(mAssignToProject.getText().toString())){
-//                    temp = project.getProject_id();
-//                    break;
-//                }
-//            }
-//            final String projectId = temp;
-//
-//            if(projectId.equals("")){
-//                Toast.makeText(this, "select a valid project", Toast.LENGTH_SHORT).show();
-//                mAssignToProject.setError(getString(R.string.select_a_project));
-//                hideProgressBar();
-//            }
-//            else{
-//
-//            }
-
-            // get the document reference
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-            String projectId = "fRJhFhx2MWHLIgXRiYVi";
-
-            DocumentReference newIssueRef = db
-                    .collection(getString(R.string.collection_projects))
-                    .document(projectId)
-                    .collection(getString(R.string.collection_issues))
-                    .document();
-
-            // Get user id of issue reporter
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-            // Create a new id for the issue
-            final String issueId = newIssueRef.getId();
-
-            // Create the issue and add send to database
-            Issue issue = new Issue();
-            issue.setAssignee("none");
-            issue.setDescription(mDescription.getText().toString());
-            issue.setIssue_id(issueId);
-            issue.setIssue_type(((SpinnerAdapter)mIssueTypeSpinner.getAdapter()).getSelectedText());
-            issue.setPriority(Issue.getPriorityInteger(((SpinnerAdapter)mPrioritySpinner.getAdapter()).getSelectedText()));
-            issue.setReporter(userId);
-            issue.setStatus(Issue.IDLE);
-            issue.setSummary(mSummary.getText().toString());
-            issue.setProject_id(projectId);
-
-            newIssueRef.set(issue).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    hideProgressBar();
-                    Intent intent = new Intent();
-                    intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.created_new_issue));
-                    setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
-                    finish();
+            // Find the Project id
+            String temp = "";
+            for(Project project : mProjects){
+                if(project.getName().equals(mAssignToProject.getText().toString())){
+                    temp = project.getProject_id();
+                    break;
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    hideProgressBar();
-                    Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.failed_to_create_new_issue), Snackbar.LENGTH_LONG).show();
-                }
-            });
+            }
+            final String projectId = temp;
+
+            if(projectId.equals("")){
+                Toast.makeText(this, "select a valid project", Toast.LENGTH_SHORT).show();
+                mAssignToProject.setError(getString(R.string.select_a_project));
+                hideProgressBar();
+            }
+            else{
+                // get the document reference
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                DocumentReference newIssueRef = db
+                        .collection(getString(R.string.collection_projects))
+                        .document(projectId)
+                        .collection(getString(R.string.collection_issues))
+                        .document();
+
+                // Get user id of issue reporter
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                // Create a new id for the issue
+                final String issueId = newIssueRef.getId();
+
+                // Create the issue and add send to database
+                Issue issue = new Issue();
+                issue.setAssignee("none");
+                issue.setDescription(mDescription.getText().toString());
+                issue.setIssue_id(issueId);
+                issue.setIssue_type(((SpinnerAdapter)mIssueTypeSpinner.getAdapter()).getSelectedText());
+                issue.setPriority(Issue.getPriorityInteger(((SpinnerAdapter)mPrioritySpinner.getAdapter()).getSelectedText()));
+                issue.setReporter(userId);
+                issue.setStatus(Issue.IDLE);
+                issue.setSummary(mSummary.getText().toString());
+                issue.setProject_id(projectId);
+
+                newIssueRef.set(issue).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        hideProgressBar();
+                        Intent intent = new Intent();
+                        intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.created_new_issue));
+                        setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideProgressBar();
+                        Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.failed_to_create_new_issue), Snackbar.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+
         }
     }
 
