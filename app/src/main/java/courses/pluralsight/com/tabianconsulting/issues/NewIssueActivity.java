@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -104,7 +105,10 @@ public class NewIssueActivity extends AppCompatActivity implements
     private void initProjectAutoCompleteTextView(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection(getString(R.string.collection_projects))
+        CollectionReference projectsRef = db.collection(getString(R.string.collection_projects));
+
+
+        projectsRef
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
