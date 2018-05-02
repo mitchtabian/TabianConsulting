@@ -159,7 +159,7 @@ public class IssueDetailsActivity extends AppCompatActivity implements
             final String projectId = temp;
 
             if(projectId.equals("")){
-                Toast.makeText(this, "select a valid project", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "error finding project", Toast.LENGTH_SHORT).show();
             }
             else{
                 // get the document reference
@@ -174,37 +174,33 @@ public class IssueDetailsActivity extends AppCompatActivity implements
                 // Get user id of issue reporter
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                // Get the issue id
-                final String issueId = mIssue.getIssue_id();
-
                 // Create the issue and add send to database
                 Issue issue = new Issue();
-
                 issue.setAssignee(((SpinnerAdapter)mAssigneeSpinner.getAdapter()).getSelectedText());
                 issue.setDescription(mDescription.getText().toString());
-                issue.setIssue_id(issueId);
+                issue.setIssue_id(mIssue.getIssue_id());
                 issue.setIssue_type(((SpinnerAdapter)mIssueTypeSpinner.getAdapter()).getSelectedText());
                 issue.setPriority(Issue.getPriorityInteger(((SpinnerAdapter)mPrioritySpinner.getAdapter()).getSelectedText()));
-                issue.setReporter(userId);
+                issue.setReporter(mIssue.getReporter());
                 issue.setStatus((String)mStatusSpinner.getSelectedItem());
                 issue.setSummary(mSummary.getText().toString());
                 issue.setProject_id(projectId);
                 issue.setTime_reported(mIssue.getTime_reported());
 
-                newIssueRef.set(issue).addOnSuccessListener(new OnSuccessListener<Void>() {
+                newIssueRef.set(issue).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        hideProgressBar();
-                        Intent intent = new Intent();
-                        intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.issue_edit_success));
-                        setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        hideProgressBar();
-                        Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.issue_edit_fail), Snackbar.LENGTH_LONG).show();
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            hideProgressBar();
+                            Intent intent = new Intent();
+                            intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.issue_edit_success));
+                            setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
+                            finish();
+                        }
+                        else{
+                            hideProgressBar();
+                            Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.issue_edit_fail), Snackbar.LENGTH_LONG).show();
+                        }
                     }
                 });
             }
