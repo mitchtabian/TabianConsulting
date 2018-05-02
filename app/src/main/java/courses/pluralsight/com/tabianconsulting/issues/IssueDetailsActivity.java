@@ -148,63 +148,45 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         else{
             showProgressBar();
 
-            // Find the Project id
-            String temp = "";
-            for(Project project : mProjects){
-                if(project.getName().equals(mAssignToProject.getText().toString())){
-                    temp = project.getProject_id();
-                    break;
-                }
-            }
-            final String projectId = temp;
+            // get the document reference
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            if(projectId.equals("")){
-                Toast.makeText(this, "error finding project", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                // get the document reference
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference newIssueRef = db
+                    .collection(getString(R.string.collection_projects))
+                    .document(mIssue.getProject_id())
+                    .collection(getString(R.string.collection_issues))
+                    .document(mIssue.getIssue_id());
 
-                DocumentReference newIssueRef = db
-                        .collection(getString(R.string.collection_projects))
-                        .document(projectId)
-                        .collection(getString(R.string.collection_issues))
-                        .document(mIssue.getIssue_id());
+            // Create the issue and add send to database
+            Issue issue = new Issue();
+            issue.setAssignee(((SpinnerAdapter)mAssigneeSpinner.getAdapter()).getSelectedText());
+            issue.setDescription(mDescription.getText().toString());
+            issue.setIssue_id(mIssue.getIssue_id());
+            issue.setIssue_type(((SpinnerAdapter)mIssueTypeSpinner.getAdapter()).getSelectedText());
+            issue.setPriority(Issue.getPriorityInteger(((SpinnerAdapter)mPrioritySpinner.getAdapter()).getSelectedText()));
+            issue.setReporter(mIssue.getReporter());
+            issue.setStatus((String)mStatusSpinner.getSelectedItem());
+            issue.setSummary(mSummary.getText().toString());
+            issue.setProject_id(mIssue.getProject_id());
+            issue.setTime_reported(mIssue.getTime_reported());
 
-                // Get user id of issue reporter
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                // Create the issue and add send to database
-                Issue issue = new Issue();
-                issue.setAssignee(((SpinnerAdapter)mAssigneeSpinner.getAdapter()).getSelectedText());
-                issue.setDescription(mDescription.getText().toString());
-                issue.setIssue_id(mIssue.getIssue_id());
-                issue.setIssue_type(((SpinnerAdapter)mIssueTypeSpinner.getAdapter()).getSelectedText());
-                issue.setPriority(Issue.getPriorityInteger(((SpinnerAdapter)mPrioritySpinner.getAdapter()).getSelectedText()));
-                issue.setReporter(mIssue.getReporter());
-                issue.setStatus((String)mStatusSpinner.getSelectedItem());
-                issue.setSummary(mSummary.getText().toString());
-                issue.setProject_id(projectId);
-                issue.setTime_reported(mIssue.getTime_reported());
-
-                newIssueRef.set(issue).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Intent intent = new Intent();
-                            intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.issue_edit_success));
-                            setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
-                            finish();
-                        }
-                        else{
-                            Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.issue_edit_fail), Snackbar.LENGTH_LONG).show();
-                        }
-                        hideProgressBar();
+            newIssueRef.set(issue).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Intent intent = new Intent();
+                        intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.issue_edit_success));
+                        setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
+                        finish();
                     }
-                });
-            }
-
+                    else{
+                        Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.issue_edit_fail), Snackbar.LENGTH_LONG).show();
+                    }
+                    hideProgressBar();
+                }
+            });
         }
+
     }
 
 
