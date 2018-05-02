@@ -54,7 +54,7 @@ public class IssuesPhotoUploader {
     private byte[] mBytes;
     private double progress;
     private boolean mIsUploadingAttachments = false;
-    private BackgroundImageResize mResize;
+    private BackgroundConversion mConvert;
     private Uri mUploadUri;
     private AttachmentUploadCallback mAttachmentUploadCallback;
 
@@ -83,19 +83,19 @@ public class IssuesPhotoUploader {
 
         //Only accept image sizes that are compressed to under 5MB. If thats not possible
         //then do not allow image to be uploaded
-        if(mResize != null){
-            mResize.cancel(true);
+        if(mConvert != null){
+            mConvert.cancel(true);
         }
-        mResize = new BackgroundImageResize(null);
-        mResize.execute(imageUri);
+        mConvert = new BackgroundConversion(null);
+        mConvert.execute(imageUri);
     }
 
 
-    public class BackgroundImageResize extends AsyncTask<Uri, Integer, byte[]> {
+    public class BackgroundConversion extends AsyncTask<Uri, Integer, byte[]> {
 
         Bitmap mBitmap;
 
-        public BackgroundImageResize(Bitmap bm) {
+        public BackgroundConversion(Bitmap bm) {
             if (bm != null) {
                 mBitmap = bm;
             }
