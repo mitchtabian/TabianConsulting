@@ -288,8 +288,52 @@ public class IssuesFragment extends Fragment implements
                 });
             }
         }
-
     }
+
+    public void deleteIssuesFromProject(ArrayList<Issue> issues, Project project){
+
+        mIssues.removeAll(issues);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final WriteBatch batch = db.batch();
+
+        for(int i = 0; i < issues.size(); i++){
+
+            DocumentReference ref = db
+                    .collection(getString(R.string.collection_projects))
+                    .document(project.getProject_id())
+                    .collection(getString(R.string.collection_issues))
+                    .document(issues.get(i).getIssue_id());
+            batch.delete(ref);
+
+            Log.d(TAG, "deleteIssuesFromProject: queueing up issue for delete: " + issues.get(i).getIssue_id());
+        }
+
+        executeBatchCommit(batch);
+
+        // delete the project
+        db.collection(getString(R.string.collection_projects))
+                .document(project.getProject_id())
+                .delete();
+
+        Log.d(TAG, "deleteIssuesFromProject: deleted project with id: " + project.getProject_id());
+    }
+
+
+    private void executeBatchCommit(WriteBatch batch) {
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "onComplete: deleted the selected issues.");
+                    mIssuesRecyclerViewAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "onComplete: could not delete the selected issues.");
+                }
+            }
+        });
+    }
+
 
     public void hideToolbar(){
         if(mToolbar != null){

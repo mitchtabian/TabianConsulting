@@ -24,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import courses.pluralsight.com.tabianconsulting.R;
+import courses.pluralsight.com.tabianconsulting.models.Issue;
 import courses.pluralsight.com.tabianconsulting.models.Project;
 
 /**
@@ -147,6 +148,11 @@ public class IssuesActivity extends AppCompatActivity implements IIssues {
     @Override
     public void getProjects() {
         queryProjects();
+    }
+
+    @Override
+    public void deleteIssuesFromProject(ArrayList<Issue> issues, Project project) {
+        mIssuesFragment.deleteIssuesFromProject(issues, project);
     }
 }
 

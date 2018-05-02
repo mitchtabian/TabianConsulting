@@ -24,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by User on 4/16/2018.
  */
 
-public class ProjectsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
+public class ProjectsRecyclerViewAdapter extends SelectableAdapter<RecyclerView.ViewHolder> implements
         Filterable {
 
     private ArrayList<Project> mProjects = new ArrayList<>();
@@ -65,6 +65,10 @@ public class ProjectsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         ((ViewHolder)holder).name.setText(project.getName());
         ((ViewHolder)holder).created.setText(project.getTime_created().toString());
 
+        ((ViewHolder)holder).parentLayout.setBackgroundColor(
+                isSelected(position) ?
+                        mContext.getResources().getColor(R.color.transparentGrey) :
+                        Color.TRANSPARENT);
     }
 
     @Override
@@ -109,12 +113,14 @@ public class ProjectsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements
-    View.OnClickListener{
+            View.OnClickListener,
+            View.OnLongClickListener{
 
         CircleImageView avatar;
         TextView name, created;
 
         RecyclerViewClickListener listener;
+        LinearLayout parentLayout;
 
 
         public ViewHolder(View itemView, RecyclerViewClickListener listener) {
@@ -122,22 +128,33 @@ public class ProjectsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             avatar = itemView.findViewById(R.id.avatar);
             name = itemView.findViewById(R.id.project_name);
             created = itemView.findViewById(R.id.created);
+            parentLayout = itemView.findViewById(R.id.parent_layout);
 
             this.listener = listener;
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
-
         @Override
-        public void onClick(View view) {
+        public void onClick(View v) {
             if (listener != null) {
                 listener.onItemClicked(getAdapterPosition());
             }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (listener != null) {
+                return listener.onItemLongClicked(getAdapterPosition());
+            }
+
+            return false;
         }
     }
 
     public interface RecyclerViewClickListener {
         public void onItemClicked(int position);
+        public boolean onItemLongClicked(int position);
     }
 
 }
