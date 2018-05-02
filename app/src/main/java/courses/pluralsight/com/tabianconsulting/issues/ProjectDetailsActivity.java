@@ -71,8 +71,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements
     }
 
     private void setProjectDetails(){
-            RequestOptions requestOptions = new RequestOptions()
-                    .placeholder(R.drawable.default_avatar);
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.default_avatar);
 
         Glide.with(this)
                 .load(mProject.getAvatar())

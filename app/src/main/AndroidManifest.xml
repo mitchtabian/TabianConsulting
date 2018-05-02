@@ -60,6 +60,7 @@
         <activity android:name=".issues.NewProjectActivity"/>
         <activity android:name=".issues.NewIssueActivity"/>
         <activity android:name=".issues.ProjectDetailsActivity"/>
+        <activity android:name=".issues.IssueDetailsActivity"/>
 
 
     </application>

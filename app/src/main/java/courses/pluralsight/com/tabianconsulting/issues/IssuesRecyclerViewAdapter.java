@@ -26,18 +26,20 @@ public class IssuesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
     private ArrayList<Issue> mIssues = new ArrayList<>();
     private Context mContext;
-    private int[] mIcons ;
+    private int[] mIcons;
+    private RecyclerViewClickListener mRecyclerViewClickListener;
 
-    public IssuesRecyclerViewAdapter(Context context, ArrayList<Issue> issues, int[] icons) {
+    public IssuesRecyclerViewAdapter(Context context, ArrayList<Issue> issues, int[] icons, RecyclerViewClickListener recyclerViewClickListener) {
         mIssues = issues;
         mContext = context;
         mIcons = icons;
+        mRecyclerViewClickListener = recyclerViewClickListener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_issue_list_item, parent, false);
-        final ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view, mRecyclerViewClickListener);
         return holder;
     }
 
@@ -102,7 +104,9 @@ public class IssuesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener
+    {
 
         private static final String TAG = "ViewHolder";
 
@@ -110,17 +114,30 @@ public class IssuesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         TextView summary, timestamp;
         CircleImageView priority;
 
+        RecyclerViewClickListener listener;
 
-
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, RecyclerViewClickListener listener) {
             super(itemView);
             icon = itemView.findViewById(R.id.image);
             summary = itemView.findViewById(R.id.issue_summary);
             timestamp = itemView.findViewById(R.id.timestamp);
             priority = itemView.findViewById(R.id.priority);
+
+            this.listener = listener;
+
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onItemClicked(getAdapterPosition());
+            }
+        }
+    }
 
+    public interface RecyclerViewClickListener {
+        public void onItemClicked(int position);
     }
 
 }

@@ -49,7 +49,8 @@ import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 
 public class IssuesFragment extends Fragment implements
         View.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener
+        SwipeRefreshLayout.OnRefreshListener,
+        IssuesRecyclerViewAdapter.RecyclerViewClickListener
 {
 
     private static final String TAG = "IssuesFragment";
@@ -106,7 +107,7 @@ public class IssuesFragment extends Fragment implements
     private void initRecyclerView(){
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         int[]  icons = {R.drawable.ic_task_blue, R.drawable.red_bug};
-        mIssuesRecyclerViewAdapter = new IssuesRecyclerViewAdapter(getActivity(), mIssues, icons);
+        mIssuesRecyclerViewAdapter = new IssuesRecyclerViewAdapter(getActivity(), mIssues, icons, this);
         mRecyclerView.setAdapter(mIssuesRecyclerViewAdapter);
     }
 
@@ -224,6 +225,13 @@ public class IssuesFragment extends Fragment implements
     public void onRefresh() {
         getIssues();
         onItemsLoadComplete();
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        Intent intent = new Intent(getActivity(), IssueDetailsActivity.class);
+        intent.putExtra(getString(R.string.intent_issue), mIssues.get(position));
+        getActivity().startActivity(intent);
     }
 
     private void onItemsLoadComplete(){
