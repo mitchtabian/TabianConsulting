@@ -142,10 +142,7 @@ public class IssueDetailsActivity extends AppCompatActivity implements
 
         hideSoftKeyboard();
 
-        if(mAssignToProject.getText().toString().equals("")){
-            mAssignToProject.setError(getString(R.string.select_a_project));
-        }
-        else if(mSummary.getText().toString().equals("")){
+        if(mSummary.getText().toString().equals("")){
             mSummary.setError(getString(R.string.required));
         }
         else{
