@@ -8,11 +8,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,6 +39,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 
@@ -69,6 +75,8 @@ public class IssuesFragment extends Fragment implements
     private ArrayList<Project> mProjects = new ArrayList<>();
     private IssuesRecyclerViewAdapter mIssuesRecyclerViewAdapter;
     private Project mSelectedProject;
+    private ActionModeCallback mActionModeCallback = new ActionModeCallback();
+    public ActionMode mActionMode;
 
 
     @Nullable
@@ -227,6 +235,10 @@ public class IssuesFragment extends Fragment implements
         onItemsLoadComplete();
     }
 
+    private void onItemsLoadComplete(){
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
     @Override
     public void onItemClicked(int position) {
         Intent intent = new Intent(getActivity(), IssueDetailsActivity.class);
@@ -234,8 +246,116 @@ public class IssuesFragment extends Fragment implements
         getActivity().startActivity(intent);
     }
 
-    private void onItemsLoadComplete(){
-        mSwipeRefreshLayout.setRefreshing(false);
+    @Override
+    public boolean onItemLongClicked(int position) {
+        if (mActionMode == null){
+            mActionMode = ((AppCompatActivity)getActivity()).startSupportActionMode(mActionModeCallback);
+        }
+
+        toggleSelection(position);
+
+        return true;
+    }
+
+    private void deleteSelectedIssues(){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        for(int i = 0; i < mIssues.size(); i++){
+            if(mIssuesRecyclerViewAdapter.isSelected(i)){
+
+                final int index = i;
+                
+                DocumentReference ref = db
+                        .collection(getString(R.string.collection_projects))
+                        .document(mIssues.get(i).getProject_id())
+                        .collection(getString(R.string.collection_issues))
+                        .document(mIssues.get(i).getIssue_id());
+
+                ref.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            mIssues.remove(mIssues.get(index));
+                            mIssuesRecyclerViewAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        }
+
+    }
+
+    public void hideToolbar(){
+        if(mToolbar != null){
+            mToolbar.setVisibility(View.GONE);
+        }
+    }
+
+    public void showToolbar(){
+        if(mToolbar != null){
+            mToolbar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void toggleSelection(int position) {
+        mIssuesRecyclerViewAdapter.toggleSelection(position);
+        int count = mIssuesRecyclerViewAdapter.getSelectedItemCount();
+
+        if (count == 0) {
+            showToolbar();
+            mActionMode.finish();
+        } else {
+            mActionMode.setTitle(String.valueOf(count));
+            mActionMode.invalidate();
+        }
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback {
+        @SuppressWarnings("unused")
+        private final String TAG = ActionModeCallback.class.getSimpleName();
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate (R.menu.selected_menu, menu);
+            hideToolbar();
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_remove:
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Delete")
+                            .setMessage("Do you really want to delete these Issues?")
+                            .setIcon(android.R.drawable.ic_delete)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    Log.d(TAG, "menu_remove");
+                                    mode.finish();
+                                    deleteSelectedIssues();
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
+
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mIssuesRecyclerViewAdapter.clearSelection();
+            mActionMode = null;
+            showToolbar();
+        }
     }
 }
 
