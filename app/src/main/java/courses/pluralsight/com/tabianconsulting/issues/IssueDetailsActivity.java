@@ -75,7 +75,8 @@ import courses.pluralsight.com.tabianconsulting.utility.SpinnerResource;
 public class IssueDetailsActivity extends AppCompatActivity implements
         View.OnClickListener,
         IIssueDetail,
-        ChangePhotoDialog.OnPhotoReceivedListener
+        ChangePhotoDialog.OnPhotoReceivedListener,
+        IssuesPhotoUploader.AttachmentUploadCallback
 {
 
     private static final String TAG = "IssueDetailsActivity";
@@ -539,10 +540,17 @@ public class IssueDetailsActivity extends AppCompatActivity implements
 
             // Start Image Upload Process
             Log.d(TAG, "getImagePath: path: " + imagePath);
+            IssuesPhotoUploader uploader = new IssuesPhotoUploader(this, mIssue.getProject_id(), mIssue.getIssue_id(), this);
+            uploader.uploadAttachment(imagePath);
         }
     }
 
 
+    @Override
+    public void updateImageUrl(String downloadUrl, String localImagePath) {
+
+        // Update the RecyclerView with attachments
+    }
 }
 
 
