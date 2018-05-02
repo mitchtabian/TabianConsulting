@@ -293,6 +293,7 @@ public class IssuesFragment extends Fragment implements
     public void deleteIssuesFromProject(ArrayList<Issue> issues, Project project){
 
         mIssues.removeAll(issues);
+		mIssuesRecyclerViewAdapter.notifyDataSetChanged();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final WriteBatch batch = db.batch();
@@ -326,7 +327,6 @@ public class IssuesFragment extends Fragment implements
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "onComplete: deleted the selected issues.");
-                    mIssuesRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
                     Log.d(TAG, "onComplete: could not delete the selected issues.");
                 }
