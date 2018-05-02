@@ -241,9 +241,14 @@ public class IssuesFragment extends Fragment implements
 
     @Override
     public void onItemClicked(int position) {
-        Intent intent = new Intent(getActivity(), IssueDetailsActivity.class);
-        intent.putExtra(getString(R.string.intent_issue), mIssues.get(position));
-        getActivity().startActivity(intent);
+        if (mActionMode != null) {
+            toggleSelection(position);
+        }
+        else{
+            Intent intent = new Intent(getActivity(), IssueDetailsActivity.class);
+            intent.putExtra(getString(R.string.intent_issue), mIssues.get(position));
+            getActivity().startActivity(intent);
+        }
     }
 
     @Override
@@ -265,7 +270,7 @@ public class IssuesFragment extends Fragment implements
             if(mIssuesRecyclerViewAdapter.isSelected(i)){
 
                 final int index = i;
-                
+
                 DocumentReference ref = db
                         .collection(getString(R.string.collection_projects))
                         .document(mIssues.get(i).getProject_id())
