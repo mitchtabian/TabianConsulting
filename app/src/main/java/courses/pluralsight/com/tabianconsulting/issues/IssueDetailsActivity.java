@@ -191,16 +191,15 @@ public class IssueDetailsActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            hideProgressBar();
                             Intent intent = new Intent();
                             intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.issue_edit_success));
                             setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
                             finish();
                         }
                         else{
-                            hideProgressBar();
                             Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.issue_edit_fail), Snackbar.LENGTH_LONG).show();
                         }
+                        hideProgressBar();
                     }
                 });
             }
