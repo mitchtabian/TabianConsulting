@@ -59,6 +59,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import courses.pluralsight.com.tabianconsulting.ChangePhotoDialog;
 import courses.pluralsight.com.tabianconsulting.R;
 import courses.pluralsight.com.tabianconsulting.models.Issue;
 import courses.pluralsight.com.tabianconsulting.models.Project;
@@ -73,10 +74,13 @@ import courses.pluralsight.com.tabianconsulting.utility.SpinnerResource;
 
 public class IssueDetailsActivity extends AppCompatActivity implements
         View.OnClickListener,
-        IIssueDetail
-        {
+        IIssueDetail,
+        ChangePhotoDialog.OnPhotoReceivedListener
+{
 
     private static final String TAG = "IssueDetailsActivity";
+    private static final int REQUEST_CODE = 1234;
+    private static final int RECYCLERVIEW_HORIZONTAL_SPACING = 10;
 
     //widgets
     private Spinner mIssueTypeSpinner, mPrioritySpinner, mStatusSpinner, mAssigneeSpinner;
@@ -91,6 +95,7 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     private ArrayList<Project> mProjects = new ArrayList<>();
     private Issue mIssue;
     private ArrayList<User> mUsers = new ArrayList<>();
+    private boolean mStoragePermissions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,6 +126,7 @@ public class IssueDetailsActivity extends AppCompatActivity implements
             initStatusSpinner();
             getEmployeeList();
             setIssueDetails();
+            verifyStoragePermissions();
         }
         else{
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
@@ -394,7 +400,12 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         switch (view.getId()){
 
             case R.id.add_attachment:{
-
+                if(mStoragePermissions){
+                    ChangePhotoDialog dialog = new ChangePhotoDialog();
+                    dialog.show(getSupportFragmentManager(), getString(R.string.dialog_change_photo));
+                }else{
+                    verifyStoragePermissions();
+                }
                 break;
             }
 
@@ -497,6 +508,40 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     public void buildSnackbar(String message) {
         Snackbar.make(getCurrentFocus().getRootView(), message, Snackbar.LENGTH_LONG).show();
     }
+
+    /**
+     * Generalized method for asking permission. Can pass any array of permissions
+     */
+    public void verifyStoragePermissions(){
+        Log.d(TAG, "verifyPermissions: asking user for permissions.");
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA};
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                permissions[0] ) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                permissions[1] ) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                permissions[2] ) == PackageManager.PERMISSION_GRANTED) {
+            mStoragePermissions = true;
+        } else {
+            ActivityCompat.requestPermissions(
+                    this,
+                    permissions,
+                    REQUEST_CODE
+            );
+        }
+    }
+
+    @Override
+    public void getImagePath(Uri imagePath) {
+        if( !imagePath.toString().equals("")){
+
+            // Start Image Upload Process
+            Log.d(TAG, "getImagePath: path: " + imagePath);
+        }
+    }
+
 
 }
 
