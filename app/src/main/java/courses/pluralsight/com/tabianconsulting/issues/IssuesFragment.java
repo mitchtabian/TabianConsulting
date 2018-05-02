@@ -265,11 +265,11 @@ public class IssuesFragment extends Fragment implements
     private void deleteSelectedIssues(){
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final WriteBatch batch = db.batch();
 
+        final ArrayList<Issue> deletedIssues = new ArrayList<>();
         for(int i = 0; i < mIssues.size(); i++){
             if(mIssuesRecyclerViewAdapter.isSelected(i)){
-
-                final int index = i;
 
                 DocumentReference ref = db
                         .collection(getString(R.string.collection_projects))
@@ -277,23 +277,20 @@ public class IssuesFragment extends Fragment implements
                         .collection(getString(R.string.collection_issues))
                         .document(mIssues.get(i).getIssue_id());
 
-                ref.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            mIssues.remove(mIssues.get(index));
-                            mIssuesRecyclerViewAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
+                batch.delete(ref);
+
+                deletedIssues.add(mIssues.get(i));
             }
         }
+        mIssues.removeAll(deletedIssues);
+        mIssuesRecyclerViewAdapter.notifyDataSetChanged();
+        executeBatchCommit(batch);
     }
 
     public void deleteIssuesFromProject(ArrayList<Issue> issues, Project project){
 
         mIssues.removeAll(issues);
-		mIssuesRecyclerViewAdapter.notifyDataSetChanged();
+        mIssuesRecyclerViewAdapter.notifyDataSetChanged();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final WriteBatch batch = db.batch();
