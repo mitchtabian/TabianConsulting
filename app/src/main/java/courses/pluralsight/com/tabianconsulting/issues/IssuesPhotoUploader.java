@@ -86,20 +86,12 @@ public class IssuesPhotoUploader {
         if(mConvert != null){
             mConvert.cancel(true);
         }
-        mConvert = new BackgroundConversion(null);
+        mConvert = new BackgroundConversion();
         mConvert.execute(imageUri);
     }
 
 
     public class BackgroundConversion extends AsyncTask<Uri, Integer, byte[]> {
-
-        Bitmap mBitmap;
-
-        public BackgroundConversion(Bitmap bm) {
-            if (bm != null) {
-                mBitmap = bm;
-            }
-        }
 
         @Override
         protected void onPreExecute() {
@@ -110,36 +102,27 @@ public class IssuesPhotoUploader {
         protected byte[] doInBackground(Uri... params) {
             Log.d(TAG, "doInBackground: started.");
 
-            if (mBitmap == null) {
-                InputStream iStream = null;
-                try {
-                    iStream = mContext.getContentResolver().openInputStream(params[0]);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-                int bufferSize = 1024;
-                byte[] buffer = new byte[bufferSize];
-
-                int len = 0;
-                try {
-                    while ((len = iStream.read(buffer)) != -1) {
-                        byteBuffer.write(buffer, 0, len);
-                    }
-                    iStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                return byteBuffer.toByteArray();
-            } else {
-                int size = mBitmap.getRowBytes() * mBitmap.getHeight();
-                ByteBuffer byteBuffer = ByteBuffer.allocate(size);
-                mBitmap.copyPixelsToBuffer(byteBuffer);
-                byte[] bytes = byteBuffer.array();
-                byteBuffer.rewind();
-                return bytes;
+            InputStream iStream = null;
+            try {
+                iStream = mContext.getContentResolver().openInputStream(params[0]);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+            int bufferSize = 1024;
+            byte[] buffer = new byte[bufferSize];
+
+            int len = 0;
+            try {
+                while ((len = iStream.read(buffer)) != -1) {
+                    byteBuffer.write(buffer, 0, len);
+                }
+                iStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return byteBuffer.toByteArray();
         }
 
 
