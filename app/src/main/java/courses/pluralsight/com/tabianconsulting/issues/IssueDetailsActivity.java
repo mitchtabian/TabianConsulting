@@ -61,6 +61,7 @@ import java.util.List;
 
 import courses.pluralsight.com.tabianconsulting.ChangePhotoDialog;
 import courses.pluralsight.com.tabianconsulting.R;
+import courses.pluralsight.com.tabianconsulting.models.Attachment;
 import courses.pluralsight.com.tabianconsulting.models.Issue;
 import courses.pluralsight.com.tabianconsulting.models.Project;
 import courses.pluralsight.com.tabianconsulting.models.User;
@@ -76,7 +77,8 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         View.OnClickListener,
         IIssueDetail,
         ChangePhotoDialog.OnPhotoReceivedListener,
-        IssuesPhotoUploader.AttachmentUploadCallback
+        IssuesPhotoUploader.AttachmentUploadCallback,
+        AttachmentRecyclerViewAdapter.IsAttachmentsSelected
 {
 
     private static final String TAG = "IssueDetailsActivity";
@@ -97,6 +99,8 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     private Issue mIssue;
     private ArrayList<User> mUsers = new ArrayList<>();
     private boolean mStoragePermissions;
+    private AttachmentRecyclerViewAdapter mAttachmentRecyclerViewAdapter;
+    public ArrayList<String> mAttachments = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,6 +131,7 @@ public class IssueDetailsActivity extends AppCompatActivity implements
             initStatusSpinner();
             getEmployeeList();
             setIssueDetails();
+            initRecyclerView();
             verifyStoragePermissions();
         }
         else{
@@ -138,12 +143,49 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     private boolean getIssue(){
         if(getIntent().hasExtra(getString(R.string.intent_issue))){
             mIssue = getIntent().getParcelableExtra(getString(R.string.intent_issue));
+            getAttachments();
             return true;
         }
         return false;
     }
 
+    private void getAttachments(){
+        // get the document reference
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        CollectionReference newIssueRef = db
+                .collection(getString(R.string.collection_projects))
+                .document(mIssue.getProject_id())
+                .collection(getString(R.string.collection_issues))
+                .document(mIssue.getIssue_id())
+                .collection(getString(R.string.collection_attachments));
+
+        newIssueRef.orderBy(getString(R.string.field_timestamp), com.google.firebase.firestore.Query.Direction.ASCENDING)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        mAttachments.add(documentSnapshot.toObject(Attachment.class).getUrl());
+                    }
+                    mAttachmentRecyclerViewAdapter.notifyDataSetChanged();
+                }
+                else{
+                    Log.d(TAG, "onComplete: couldn't get attachments.");
+                }
+            }
+        });
+    }
+
+    private void initRecyclerView(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+        HorizontalSpacingItemDecorator itemDecorator = new HorizontalSpacingItemDecorator(RECYCLERVIEW_HORIZONTAL_SPACING);
+        mRecyclerView.addItemDecoration(itemDecorator);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mAttachmentRecyclerViewAdapter = new AttachmentRecyclerViewAdapter(this, mAttachments, this);
+        mRecyclerView.setAdapter(mAttachmentRecyclerViewAdapter);
+    }
 
     private void saveChanges(){
 
@@ -542,6 +584,8 @@ public class IssueDetailsActivity extends AppCompatActivity implements
             Log.d(TAG, "getImagePath: path: " + imagePath);
             IssuesPhotoUploader uploader = new IssuesPhotoUploader(this, mIssue.getProject_id(), mIssue.getIssue_id(), this);
             uploader.uploadAttachment(imagePath);
+            mAttachments.add(imagePath.toString());
+            mAttachmentRecyclerViewAdapter.notifyDataSetChanged();
         }
     }
 
@@ -550,6 +594,48 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     public void updateImageUrl(String downloadUrl, String localImagePath) {
 
         // Update the RecyclerView with attachments
+        mAttachments.remove(localImagePath);
+        mAttachments.add(downloadUrl);
+        mAttachmentRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void inflateFullScreenImageFragment(final Object imageResource) {
+
+        hideStatusBar();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FullScreenImageFragment fragment = new FullScreenImageFragment();
+        fragment.setImageResource(imageResource);
+
+        transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
+        transaction.replace(R.id.fullscreen_container, fragment, getString(R.string.fragment_full_screen));
+        transaction.addToBackStack(getString(R.string.fragment_full_screen));
+        transaction.commit();
+    }
+
+    /**
+     * sets the trash-can and "add attachment" visibilities
+     * @param isSelected
+     */
+    @Override
+    public void isSelected(boolean isSelected) {
+        if(isSelected){
+            removeAttachmentsMode();
+        }
+        else{
+            addAttachmentMode();
+        }
+    }
+
+    private void addAttachmentMode(){
+        mAddAttachment.setVisibility(View.VISIBLE);
+        mRemoveAttachments.setVisibility(View.GONE);
+    }
+
+    private void removeAttachmentsMode(){
+        mAddAttachment.setVisibility(View.GONE);
+        mRemoveAttachments.setVisibility(View.VISIBLE);
     }
 }
 

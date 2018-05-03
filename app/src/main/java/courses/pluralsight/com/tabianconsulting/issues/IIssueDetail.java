@@ -9,4 +9,6 @@ public interface IIssueDetail {
     void showProgressBar();
 
     void hideProgressBar();
+
+    void inflateFullScreenImageFragment(Object imageResource);
 }
