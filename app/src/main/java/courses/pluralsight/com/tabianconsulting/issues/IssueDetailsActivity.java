@@ -65,6 +65,7 @@ import courses.pluralsight.com.tabianconsulting.models.Attachment;
 import courses.pluralsight.com.tabianconsulting.models.Issue;
 import courses.pluralsight.com.tabianconsulting.models.Project;
 import courses.pluralsight.com.tabianconsulting.models.User;
+import courses.pluralsight.com.tabianconsulting.utility.FilePaths;
 import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 import courses.pluralsight.com.tabianconsulting.utility.SpinnerResource;
 
@@ -453,7 +454,7 @@ public class IssueDetailsActivity extends AppCompatActivity implements
             }
 
             case R.id.remove_attachments:{
-
+                removeAttachments();
                 break;
             }
 
@@ -637,6 +638,111 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         mAddAttachment.setVisibility(View.GONE);
         mRemoveAttachments.setVisibility(View.VISIBLE);
     }
+
+    private void removeAttachments(){
+        // get the attachments that are selected
+        List<Integer> selectedAttachments = mAttachmentRecyclerViewAdapter.getSelectedItems();
+
+        // iterate through and delete
+        for(int i : selectedAttachments){
+
+            if(!mAttachments.get(i).contains("tabianconsulting")){
+                buildSnackbar("One of the images you selected is still uploading");
+            }
+            else{
+
+                // Get the url
+                final String url = mAttachments.get(i);
+
+                // Get the attachment name
+                int startingIndex = url.indexOf(mIssue.getIssue_id()) + mIssue.getIssue_id().length() + 3;
+                int endingIndex = url.indexOf("?");
+                final String attachmentFileName = url.substring(startingIndex, endingIndex);
+                Log.d(TAG, "removeAttachments: attachment name: " + attachmentFileName);
+
+                // Query Firestore for the attachment with the name above
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                db.collection(getString(R.string.collection_projects))
+                        .document(mIssue.getProject_id())
+                        .collection(getString(R.string.collection_issues))
+                        .document(mIssue.getIssue_id())
+                        .collection(getString(R.string.collection_attachments))
+                        .whereEqualTo(getString(R.string.field_name), attachmentFileName)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                        String id = documentSnapshot.getId();
+                                        Log.d(TAG, "onComplete: deleting attachment with id: " + id);
+                                        deleteAttachmentDocument(url, id, attachmentFileName);
+                                    }
+                                }
+                                else{
+                                    Log.d(TAG, "onComplete: error finding attachment.");
+                                }
+                            }
+                        });
+
+            }
+        }
+    }
+
+    private void deleteAttachmentDocument(
+            final String url, final String attachmentId, final String attachmentFileName){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection(getString(R.string.collection_projects))
+                .document(mIssue.getProject_id())
+                .collection(getString(R.string.collection_issues))
+                .document(mIssue.getIssue_id())
+                .collection(getString(R.string.collection_attachments))
+                .document(attachmentId)
+                .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG, "onComplete: deleted attachment: " + attachmentId);
+                    deleteAttachmentFromStorage(attachmentFileName);
+                    mAttachments.remove(url);
+                    mAttachmentRecyclerViewAdapter.notifyDataSetChanged();
+                }
+                else{
+                    Log.d(TAG, "onComplete: failed to delete attachment: " + attachmentId);
+                }
+            }
+        });
+    }
+
+    private void deleteAttachmentFromStorage(final String filename){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        StorageReference storageRef = storage.getReference();
+
+        FilePaths filePaths = new FilePaths();
+        StorageReference filePathRef = storageRef.child(filePaths.FIREBASE_ISSUE_IMAGE_STORAGE
+                + File.separator + mIssue.getIssue_id()
+                + File.separator + filename);
+
+        Log.d(TAG, "deleteAttachmentFromStorage: removing from storage: " + filePathRef);
+
+        filePathRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: SUCCESSFULLY deleted file: " + filename);
+                mAttachmentRecyclerViewAdapter.clearSelection();
+                isSelected(false);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d(TAG, "onSuccess: FAILED to delete file: " + filename);
+            }
+        });
+    }
+
 }
 
 

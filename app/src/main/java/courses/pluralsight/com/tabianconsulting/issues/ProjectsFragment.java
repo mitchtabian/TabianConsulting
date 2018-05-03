@@ -231,6 +231,7 @@ public class ProjectsFragment extends Fragment implements
 
                         // delete issues and attachments via IssuesFragment
                         mIIssues.deleteIssuesFromProject(issues, project);
+                        deleteProjectAvatarFromStorage(project);
                     }
                     else{
                         Log.d(TAG, "onComplete: error finding issues.");
@@ -240,6 +241,33 @@ public class ProjectsFragment extends Fragment implements
         }
     }
 
+    private void deleteProjectAvatarFromStorage(Project project){
+
+        if(!project.getAvatar().equals("")){
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            StorageReference storageRef = storage.getReference();
+
+            FilePaths filePaths = new FilePaths();
+            StorageReference filePathRef = storageRef.child(filePaths.FIREBASE_PROJECT_IMAGE_STORAGE
+                    + File.separator + project.getProject_id()
+                    + File.separator + "project_avatar");
+
+            Log.d(TAG, "deleteProjectAvatarFromStorage: removing from storage: " + filePathRef);
+
+            filePathRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "onSuccess: SUCCESSFULLY deleted file: project_avatar");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d(TAG, "onSuccess: FAILED to delete file: project_avatar");
+                }
+            });
+        }
+    }
 
     public void hideToolbar(){
         if(mToolbar != null){

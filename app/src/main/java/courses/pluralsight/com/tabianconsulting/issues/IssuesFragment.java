@@ -40,12 +40,17 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import courses.pluralsight.com.tabianconsulting.R;
+import courses.pluralsight.com.tabianconsulting.models.Attachment;
 import courses.pluralsight.com.tabianconsulting.models.Issue;
 import courses.pluralsight.com.tabianconsulting.models.Project;
+import courses.pluralsight.com.tabianconsulting.utility.FilePaths;
 import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 
 
@@ -282,10 +287,133 @@ public class IssuesFragment extends Fragment implements
                 deletedIssues.add(mIssues.get(i));
             }
         }
+
         mIssues.removeAll(deletedIssues);
         mIssuesRecyclerViewAdapter.notifyDataSetChanged();
         executeBatchCommit(batch);
     }
+
+    public void deleteAttachments(final ArrayList<Issue> deletedIssues, final WriteBatch batch, final Project project){
+
+        Log.d(TAG, "deleteAttachments: deleting issues and attachments.");
+
+        mIssues.removeAll(deletedIssues);
+        mIssuesRecyclerViewAdapter.notifyDataSetChanged();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        if(deletedIssues.size() > 0){
+            for(int i = 0; i < deletedIssues.size(); i++){
+
+                Log.d(TAG, "deleteAttachments: deleting issue with id: " + deletedIssues.get(i).getIssue_id());
+
+                final Issue issue = deletedIssues.get(i);
+
+                final int index = i;
+
+                db.collection(getString(R.string.collection_projects))
+                        .document(issue.getProject_id())
+                        .collection(getString(R.string.collection_issues))
+                        .document(issue.getIssue_id())
+                        .collection(getString(R.string.collection_attachments))
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+
+                                Log.d(TAG, "onComplete: deleting attachment with id: " + documentSnapshot.getId());
+
+                                Attachment attachment = documentSnapshot.toObject(Attachment.class);
+
+                                // Get the url
+                                final String url = attachment.getUrl();
+
+                                // Get the attachment name
+                                int startingIndex = url.indexOf(issue.getIssue_id()) + issue.getIssue_id().length() + 3;
+                                int endingIndex = url.indexOf("?");
+                                final String attachmentFileName = url.substring(startingIndex, endingIndex);
+                                Log.d(TAG, "removeAttachments: attachment name: " + attachmentFileName);
+
+                                deleteAttachmentDocument(issue, documentSnapshot.getId(), attachmentFileName);
+                            }
+
+                            if(index == deletedIssues.size() - 1){
+                                if(batch == null){
+                                    Log.d(TAG, "deleteAttachments: batch is NULL.");
+                                    deleteIssuesFromProject(deletedIssues, project);
+                                }
+                                else{
+                                    executeBatchCommit(batch);
+                                }
+                            }
+                        }
+                        else{
+                            Log.d(TAG, "onComplete: error finding attachment.");
+                        }
+                    }
+                });
+            }
+        }
+        else{
+            if(batch == null){
+                Log.d(TAG, "deleteAttachments: batch is NULL.");
+                deleteIssuesFromProject(deletedIssues, project);
+            }
+            else{
+                executeBatchCommit(batch);
+            }
+        }
+    }
+
+    private void deleteAttachmentDocument(final Issue issue, final String attachmentId, final String attachmentFileName){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection(getString(R.string.collection_projects))
+                .document(issue.getProject_id())
+                .collection(getString(R.string.collection_issues))
+                .document(issue.getIssue_id())
+                .collection(getString(R.string.collection_attachments))
+                .document(attachmentId)
+                .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG, "onComplete: deleted attachment: " + attachmentId);
+                    deleteAttachmentFromStorage(issue, attachmentFileName);
+                }
+                else{
+                    Log.d(TAG, "onComplete: failed to delete attachment: " + attachmentId);
+                }
+            }
+        });
+    }
+
+    private void deleteAttachmentFromStorage(final Issue issue, final String filename){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        StorageReference storageRef = storage.getReference();
+
+        FilePaths filePaths = new FilePaths();
+        StorageReference filePathRef = storageRef.child(filePaths.FIREBASE_ISSUE_IMAGE_STORAGE
+                + File.separator + issue.getIssue_id()
+                + File.separator + filename);
+
+        Log.d(TAG, "deleteAttachmentFromStorage: removing from storage: " + filePathRef);
+
+        filePathRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: SUCCESSFULLY deleted file: " + filename);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d(TAG, "onSuccess: FAILED to delete file: " + filename);
+            }
+        });
+    }
+
 
     public void deleteIssuesFromProject(ArrayList<Issue> issues, Project project){
 
