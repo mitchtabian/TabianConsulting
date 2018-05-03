@@ -288,9 +288,7 @@ public class IssuesFragment extends Fragment implements
             }
         }
 
-        mIssues.removeAll(deletedIssues);
-        mIssuesRecyclerViewAdapter.notifyDataSetChanged();
-        executeBatchCommit(batch);
+        deleteAttachments(deletedIssues, batch, null);
     }
 
     public void deleteAttachments(final ArrayList<Issue> deletedIssues, final WriteBatch batch, final Project project){
@@ -356,13 +354,8 @@ public class IssuesFragment extends Fragment implements
             }
         }
         else{
-            if(batch == null){
-                Log.d(TAG, "deleteAttachments: batch is NULL.");
-                deleteIssuesFromProject(deletedIssues, project);
-            }
-            else{
-                executeBatchCommit(batch);
-            }
+            Log.d(TAG, "deleteAttachments: batch is NULL.");
+            deleteIssuesFromProject(deletedIssues, project);
         }
     }
 
