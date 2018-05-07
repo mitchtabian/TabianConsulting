@@ -1,6 +1,7 @@
 package courses.pluralsight.com.tabianconsulting.issues;
 
 import android.content.Context;
+<<<<<<< HEAD
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,13 +18,25 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+=======
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.Toast;
+
+>>>>>>> Module_7.5_End
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+<<<<<<< HEAD
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+=======
+>>>>>>> Module_7.5_End
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,18 +49,30 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+<<<<<<< HEAD
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+=======
+import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+>>>>>>> Module_7.5_End
 import java.util.Date;
 import java.util.HashMap;
 
 import courses.pluralsight.com.tabianconsulting.R;
+<<<<<<< HEAD
 import courses.pluralsight.com.tabianconsulting.SettingsActivity;
 import courses.pluralsight.com.tabianconsulting.models.Attachment;
 import courses.pluralsight.com.tabianconsulting.utility.FilePaths;
 
+=======
+import courses.pluralsight.com.tabianconsulting.models.Attachment;
+import courses.pluralsight.com.tabianconsulting.utility.FilePaths;
+
+
+>>>>>>> Module_7.5_End
 /**
  * Created by User on 4/16/2018.
  */
@@ -67,7 +92,11 @@ public class IssuesPhotoUploader {
     private byte[] mBytes;
     private double progress;
     private boolean mIsUploadingAttachments = false;
+<<<<<<< HEAD
     private BackgroundImageResize mResize;
+=======
+    private BackgroundConversion mConvert;
+>>>>>>> Module_7.5_End
     private Uri mUploadUri;
     private AttachmentUploadCallback mAttachmentUploadCallback;
 
@@ -96,6 +125,7 @@ public class IssuesPhotoUploader {
 
         //Only accept image sizes that are compressed to under 5MB. If thats not possible
         //then do not allow image to be uploaded
+<<<<<<< HEAD
         if(mResize != null){
             mResize.cancel(true);
         }
@@ -113,6 +143,17 @@ public class IssuesPhotoUploader {
                 mBitmap = bm;
             }
         }
+=======
+        if(mConvert != null){
+            mConvert.cancel(true);
+        }
+        mConvert = new BackgroundConversion();
+        mConvert.execute(imageUri);
+    }
+
+
+    public class BackgroundConversion extends AsyncTask<Uri, Integer, byte[]> {
+>>>>>>> Module_7.5_End
 
         @Override
         protected void onPreExecute() {
@@ -123,6 +164,7 @@ public class IssuesPhotoUploader {
         protected byte[] doInBackground(Uri... params) {
             Log.d(TAG, "doInBackground: started.");
 
+<<<<<<< HEAD
             if (mBitmap == null) {
                 InputStream iStream = null;
                 try {
@@ -153,6 +195,29 @@ public class IssuesPhotoUploader {
                 byteBuffer.rewind();
                 return bytes;
             }
+=======
+            InputStream iStream = null;
+            try {
+                iStream = mContext.getContentResolver().openInputStream(params[0]);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+            int bufferSize = 1024;
+            byte[] buffer = new byte[bufferSize];
+
+            int len = 0;
+            try {
+                while ((len = iStream.read(buffer)) != -1) {
+                    byteBuffer.write(buffer, 0, len);
+                }
+                iStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return byteBuffer.toByteArray();
+>>>>>>> Module_7.5_End
         }
 
 
@@ -254,8 +319,13 @@ public class IssuesPhotoUploader {
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "onComplete: new attachment attached to collection.");
                 mAttachmentUploadCallback.updateImageUrl(downloadUrl, mUploadUri.toString());
+<<<<<<< HEAD
             }
                 }).addOnFailureListener(new OnFailureListener() {
+=======
+            }})
+                .addOnFailureListener(new OnFailureListener() {
+>>>>>>> Module_7.5_End
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d(TAG, "onComplete: attachment upload failed.");

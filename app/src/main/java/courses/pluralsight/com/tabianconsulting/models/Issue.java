@@ -3,12 +3,20 @@ package courses.pluralsight.com.tabianconsulting.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+<<<<<<< HEAD
 import java.util.Date;
 import java.util.List;
 
 import com.google.firebase.firestore.IgnoreExtraProperties;
 import com.google.firebase.firestore.ServerTimestamp;
 
+=======
+import com.google.firebase.firestore.IgnoreExtraProperties;
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
+>>>>>>> Module_7.5_End
 
 @IgnoreExtraProperties
 public class Issue implements Parcelable{
@@ -21,9 +29,12 @@ public class Issue implements Parcelable{
     public static final String LOW = "Low";
     public static final String TASK = "Task";
     public static final String BUG = "Bug";
+<<<<<<< HEAD
     public static final String[] STATUS = {IN_PROGRESS, DONE, IDLE};
     public static final String[] PRIORITY = {HIGH, MEDIUM, LOW};
     public static final String[] ISSUE_TYPE = {TASK, BUG};
+=======
+>>>>>>> Module_7.5_End
 
     private String summary;
     private String status; // "In Progress", "Done", "Idle"

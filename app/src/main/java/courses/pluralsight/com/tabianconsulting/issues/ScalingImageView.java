@@ -12,9 +12,12 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
+<<<<<<< HEAD
 /**
  * Created by User on 3/9/2018.
  */
+=======
+>>>>>>> Module_7.5_End
 
 public class ScalingImageView extends android.support.v7.widget.AppCompatImageView implements
         View.OnTouchListener,

@@ -3,7 +3,11 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 27
+<<<<<<< HEAD
     buildToolsVersion "27.0.3"
+=======
+    buildToolsVersion '27.0.3'
+>>>>>>> Module_7.5_End
     defaultConfig {
         applicationId "courses.pluralsight.com.tabianconsulting"
         minSdkVersion 16
@@ -21,13 +25,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
+<<<<<<< HEAD
 
     //Android Support Design Library
     implementation 'com.android.support:design:27.1.1'
@@ -66,11 +71,41 @@ dependencies {
     //Firebase Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:12.0.0'
 
+=======
+    //Android Support Design Library
+    implementation 'com.android.support:design:27.1.1'
+    //RecyclerView
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    //Retrofit JSON
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    //Universal Image Loader
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+    // Firestore
+    implementation 'com.google.firebase:firebase-firestore:12.0.0'
+    //Firebase Authentication
+    implementation 'com.google.firebase:firebase-auth:12.0.0'
+    //Firebase Realtime Database
+    implementation 'com.google.firebase:firebase-database:12.0.0'
+    //Firebase Storage
+    implementation 'com.google.firebase:firebase-storage:12.0.0'
+    //Firebase Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging:12.0.0'
+>>>>>>> Module_7.5_End
     //Firebase Crashlytics
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
     implementation 'com.google.firebase:firebase-core:12.0.0'
+<<<<<<< HEAD
 
+=======
+>>>>>>> Module_7.5_End
 }
 apply plugin: 'com.google.gms.google-services'

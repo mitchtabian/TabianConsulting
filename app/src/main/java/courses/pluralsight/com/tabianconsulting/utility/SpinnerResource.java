@@ -1,5 +1,9 @@
 package courses.pluralsight.com.tabianconsulting.utility;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Module_7.5_End
 import courses.pluralsight.com.tabianconsulting.R;
 import courses.pluralsight.com.tabianconsulting.models.Issue;
 
