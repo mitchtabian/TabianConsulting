@@ -1,25 +1,11 @@
 package courses.pluralsight.com.tabianconsulting.issues;
 
-<<<<<<< HEAD
-import android.animation.ValueAnimator;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-=======
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
->>>>>>> Module_7.5_End
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -27,27 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-<<<<<<< HEAD
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-
-=======
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,24 +26,16 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
->>>>>>> Module_7.5_End
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-<<<<<<< HEAD
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-=======
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
->>>>>>> Module_7.5_End
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -87,10 +44,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
-<<<<<<< HEAD
-import java.lang.reflect.Array;
-=======
->>>>>>> Module_7.5_End
 import java.util.ArrayList;
 
 import courses.pluralsight.com.tabianconsulting.R;
@@ -99,11 +52,7 @@ import courses.pluralsight.com.tabianconsulting.models.Issue;
 import courses.pluralsight.com.tabianconsulting.models.Project;
 import courses.pluralsight.com.tabianconsulting.utility.FilePaths;
 import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
-<<<<<<< HEAD
-import courses.pluralsight.com.tabianconsulting.utility.SpinnerResource;
-=======
 
->>>>>>> Module_7.5_End
 
 /**
  * Created by User on 4/16/2018.
@@ -112,12 +61,8 @@ import courses.pluralsight.com.tabianconsulting.utility.SpinnerResource;
 public class IssuesFragment extends Fragment implements
         View.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener,
-<<<<<<< HEAD
-        IssuesRecyclerViewAdapter.RecyclerViewClickListener{
-=======
         IssuesRecyclerViewAdapter.RecyclerViewClickListener
 {
->>>>>>> Module_7.5_End
 
     private static final String TAG = "IssuesFragment";
 
@@ -128,17 +73,6 @@ public class IssuesFragment extends Fragment implements
     private Spinner mProjectSpinner;
     public Toolbar mToolbar;
 
-<<<<<<< HEAD
-    //vars
-    private IIssues mIIssues;
-    private ArrayList<Project> mProjects = new ArrayList<>();
-    private ArrayList<Issue> mIssues = new ArrayList<>();
-    private Project mSelectedProject;
-    private IssuesRecyclerViewAdapter mIssuesRecyclerViewAdapter;
-    private ActionModeCallback mActionModeCallback = new ActionModeCallback();
-    public ActionMode mActionMode;
-
-=======
 
     //vars
     private IIssues mIIssues;
@@ -150,7 +84,6 @@ public class IssuesFragment extends Fragment implements
     public ActionMode mActionMode;
 
 
->>>>>>> Module_7.5_End
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -169,10 +102,6 @@ public class IssuesFragment extends Fragment implements
         return view;
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Module_7.5_End
     public void updateProjectsList(ArrayList<Project> projects){
 
         if(mProjects != null){
@@ -182,29 +111,18 @@ public class IssuesFragment extends Fragment implements
         }
 
         if(projects != null){
-<<<<<<< HEAD
-//            if(projects.size() > 0){
-//                mProjects.addAll(projects);
-//                initProjectsSpinner();
-//                initRecyclerView();
-//            }
-=======
->>>>>>> Module_7.5_End
             mProjects.addAll(projects);
             initProjectsSpinner();
             initRecyclerView();
         }
     }
 
-<<<<<<< HEAD
-=======
     private void initRecyclerView(){
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         int[]  icons = {R.drawable.ic_task_blue, R.drawable.red_bug};
         mIssuesRecyclerViewAdapter = new IssuesRecyclerViewAdapter(getActivity(), mIssues, icons, this);
         mRecyclerView.setAdapter(mIssuesRecyclerViewAdapter);
     }
->>>>>>> Module_7.5_End
 
     private void initProjectsSpinner(){
 
@@ -234,10 +152,6 @@ public class IssuesFragment extends Fragment implements
         }
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Module_7.5_End
     private void getIssues(){
         if(mSelectedProject != null){
 
@@ -274,27 +188,12 @@ public class IssuesFragment extends Fragment implements
                         }
                     });
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> Module_7.5_End
     }
 
     private void getProjects(){
         mIIssues.getProjects();
     }
 
-<<<<<<< HEAD
-    private void initRecyclerView(){
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        int[]  icons = {R.drawable.ic_task_blue, R.drawable.red_bug};
-        mIssuesRecyclerViewAdapter = new IssuesRecyclerViewAdapter(getActivity(), mIssues, icons, this);
-        mRecyclerView.setAdapter(mIssuesRecyclerViewAdapter);
-    }
-
-
-=======
->>>>>>> Module_7.5_End
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -309,25 +208,6 @@ public class IssuesFragment extends Fragment implements
     }
 
     @Override
-<<<<<<< HEAD
-    public void onResume() {
-        super.onResume();
-        onRefresh();
-    }
-
-    @Override
-    public void onRefresh() {
-        getIssues();
-        onItemsLoadComplete();
-    }
-
-    private void onItemsLoadComplete(){
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-=======
->>>>>>> Module_7.5_End
     public void onAttach(Context context) {
         super.onAttach(context);
         try{
@@ -349,8 +229,6 @@ public class IssuesFragment extends Fragment implements
     }
 
     @Override
-<<<<<<< HEAD
-=======
     public void onResume() {
         super.onResume();
         onRefresh();
@@ -367,7 +245,6 @@ public class IssuesFragment extends Fragment implements
     }
 
     @Override
->>>>>>> Module_7.5_End
     public void onItemClicked(int position) {
         if (mActionMode != null) {
             toggleSelection(position);
@@ -377,10 +254,6 @@ public class IssuesFragment extends Fragment implements
             intent.putExtra(getString(R.string.intent_issue), mIssues.get(position));
             getActivity().startActivity(intent);
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> Module_7.5_End
     }
 
     @Override
@@ -394,34 +267,6 @@ public class IssuesFragment extends Fragment implements
         return true;
     }
 
-<<<<<<< HEAD
-    private void toggleSelection(int position) {
-        mIssuesRecyclerViewAdapter.toggleSelection(position);
-        int count = mIssuesRecyclerViewAdapter.getSelectedItemCount();
-
-        if (count == 0) {
-            showToolbar();
-            mActionMode.finish();
-        } else {
-            mActionMode.setTitle(String.valueOf(count));
-            mActionMode.invalidate();
-        }
-    }
-
-    public void hideToolbar(){
-        if(mToolbar != null){
-            mToolbar.setVisibility(View.GONE);
-        }
-    }
-
-    public void showToolbar(){
-        if(mToolbar != null){
-            mToolbar.setVisibility(View.VISIBLE);
-        }
-    }
-
-=======
->>>>>>> Module_7.5_End
     private void deleteSelectedIssues(){
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -430,24 +275,15 @@ public class IssuesFragment extends Fragment implements
         final ArrayList<Issue> deletedIssues = new ArrayList<>();
         for(int i = 0; i < mIssues.size(); i++){
             if(mIssuesRecyclerViewAdapter.isSelected(i)){
-<<<<<<< HEAD
-=======
 
->>>>>>> Module_7.5_End
                 DocumentReference ref = db
                         .collection(getString(R.string.collection_projects))
                         .document(mIssues.get(i).getProject_id())
                         .collection(getString(R.string.collection_issues))
                         .document(mIssues.get(i).getIssue_id());
-<<<<<<< HEAD
-                batch.delete(ref);
-
-                Log.d(TAG, "deleteSelectedIssues: queueing up issue for delete: " + mIssues.get(i).getIssue_id());
-=======
 
                 batch.delete(ref);
 
->>>>>>> Module_7.5_End
                 deletedIssues.add(mIssues.get(i));
             }
         }
@@ -455,19 +291,12 @@ public class IssuesFragment extends Fragment implements
         deleteAttachments(deletedIssues, batch, null);
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Module_7.5_End
     public void deleteAttachments(final ArrayList<Issue> deletedIssues, final WriteBatch batch, final Project project){
 
         Log.d(TAG, "deleteAttachments: deleting issues and attachments.");
 
         mIssues.removeAll(deletedIssues);
-<<<<<<< HEAD
-=======
         mIssuesRecyclerViewAdapter.notifyDataSetChanged();
->>>>>>> Module_7.5_End
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -525,18 +354,8 @@ public class IssuesFragment extends Fragment implements
             }
         }
         else{
-<<<<<<< HEAD
-            if(batch == null){
-                Log.d(TAG, "deleteAttachments: batch is NULL.");
-                deleteIssuesFromProject(deletedIssues, project);
-            }
-            else{
-                executeBatchCommit(batch);
-            }
-=======
             Log.d(TAG, "deleteAttachments: batch is NULL.");
             deleteIssuesFromProject(deletedIssues, project);
->>>>>>> Module_7.5_End
         }
     }
 
@@ -588,30 +407,11 @@ public class IssuesFragment extends Fragment implements
         });
     }
 
-<<<<<<< HEAD
-    private void executeBatchCommit(WriteBatch batch){
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Log.d(TAG, "onComplete: deleted the selected issues.");
-                    mIssuesRecyclerViewAdapter.notifyDataSetChanged();
-                }
-                else{
-                    Log.d(TAG, "onComplete: could not delete the selected issues.");
-                }
-            }
-        });
-    }
-
-    private void deleteIssuesFromProject(ArrayList<Issue> issues, Project project){
-=======
 
     public void deleteIssuesFromProject(ArrayList<Issue> issues, Project project){
 
         mIssues.removeAll(issues);
         mIssuesRecyclerViewAdapter.notifyDataSetChanged();
->>>>>>> Module_7.5_End
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final WriteBatch batch = db.batch();
@@ -620,11 +420,7 @@ public class IssuesFragment extends Fragment implements
 
             DocumentReference ref = db
                     .collection(getString(R.string.collection_projects))
-<<<<<<< HEAD
-                    .document(issues.get(i).getProject_id())
-=======
                     .document(project.getProject_id())
->>>>>>> Module_7.5_End
                     .collection(getString(R.string.collection_issues))
                     .document(issues.get(i).getIssue_id());
             batch.delete(ref);
@@ -643,8 +439,6 @@ public class IssuesFragment extends Fragment implements
     }
 
 
-<<<<<<< HEAD
-=======
     private void executeBatchCommit(WriteBatch batch) {
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -684,7 +478,6 @@ public class IssuesFragment extends Fragment implements
         }
     }
 
->>>>>>> Module_7.5_End
     private class ActionModeCallback implements ActionMode.Callback {
         @SuppressWarnings("unused")
         private final String TAG = ActionModeCallback.class.getSimpleName();

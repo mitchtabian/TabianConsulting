@@ -1,9 +1,6 @@
 package courses.pluralsight.com.tabianconsulting.issues;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> Module_7.5_End
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,27 +24,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-<<<<<<< HEAD
-import android.widget.Toast;
-=======
->>>>>>> Module_7.5_End
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-<<<<<<< HEAD
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.WriteBatch;
-=======
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
->>>>>>> Module_7.5_End
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -55,19 +40,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 import courses.pluralsight.com.tabianconsulting.R;
-<<<<<<< HEAD
-import courses.pluralsight.com.tabianconsulting.models.Attachment;
-=======
->>>>>>> Module_7.5_End
 import courses.pluralsight.com.tabianconsulting.models.Issue;
 import courses.pluralsight.com.tabianconsulting.models.Project;
 import courses.pluralsight.com.tabianconsulting.utility.FilePaths;
 import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> Module_7.5_End
 /**
  * Created by User on 4/16/2018.
  */
@@ -75,12 +53,8 @@ import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 public class ProjectsFragment extends Fragment implements
         View.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener,
-<<<<<<< HEAD
-        ProjectsRecyclerViewAdapter.RecyclerViewClickListener{
-=======
         ProjectsRecyclerViewAdapter.RecyclerViewClickListener
 {
->>>>>>> Module_7.5_End
 
     private static final String TAG = "ProjectsFragment";
 
@@ -92,11 +66,7 @@ public class ProjectsFragment extends Fragment implements
     public Toolbar mToolbar;
 
     //vars
-<<<<<<< HEAD
-    private ProjectsRecyclerViewAdapter mAdapter;
-=======
     private ProjectsRecyclerViewAdapter mProjectsRecyclerViewAdapter;
->>>>>>> Module_7.5_End
     private ArrayList<Project> mProjects = new ArrayList<>();
     private IIssues mIIssues;
     private ActionModeCallback mActionModeCallback = new ActionModeCallback();
@@ -137,23 +107,14 @@ public class ProjectsFragment extends Fragment implements
         if(projects != null){
             if(projects.size() > 0){
                 mProjects.addAll(projects);
-<<<<<<< HEAD
-                mAdapter.notifyDataSetChanged();
-=======
                 mProjectsRecyclerViewAdapter.notifyDataSetChanged();
->>>>>>> Module_7.5_End
             }
         }
     }
 
     private void initRecyclerView(){
-<<<<<<< HEAD
-        mAdapter = new ProjectsRecyclerViewAdapter(mProjects, getActivity(), this);
-        mRecyclerView.setAdapter(mAdapter);
-=======
         mProjectsRecyclerViewAdapter = new ProjectsRecyclerViewAdapter(mProjects, getActivity(), this);
         mRecyclerView.setAdapter(mProjectsRecyclerViewAdapter);
->>>>>>> Module_7.5_End
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
@@ -170,22 +131,14 @@ public class ProjectsFragment extends Fragment implements
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // filter recycler view when query submitted
-<<<<<<< HEAD
-                mAdapter.getFilter().filter(query);
-=======
                 mProjectsRecyclerViewAdapter.getFilter().filter(query);
->>>>>>> Module_7.5_End
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
-<<<<<<< HEAD
-                mAdapter.getFilter().filter(query);
-=======
                 mProjectsRecyclerViewAdapter.getFilter().filter(query);
->>>>>>> Module_7.5_End
                 return false;
             }
         });
@@ -217,18 +170,6 @@ public class ProjectsFragment extends Fragment implements
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-<<<<<<< HEAD
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try{
-            mIIssues = (IIssues) getActivity();
-        }catch (ClassCastException e){
-            e.printStackTrace();
-        }
-    }
-=======
->>>>>>> Module_7.5_End
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -241,22 +182,6 @@ public class ProjectsFragment extends Fragment implements
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-<<<<<<< HEAD
-    public void hideToolbar(){
-        if(mToolbar != null){
-            mToolbar.setVisibility(View.GONE);
-        }
-    }
-
-    public void showToolbar(){
-        if(mToolbar != null){
-            mToolbar.setVisibility(View.VISIBLE);
-        }
-    }
-
-
-
-=======
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -267,26 +192,18 @@ public class ProjectsFragment extends Fragment implements
         }
     }
 
->>>>>>> Module_7.5_End
     private void deleteSelectedProjects(){
 
         final ArrayList<Project> deletedProjects = new ArrayList<>();
         for(int i = 0; i < mProjects.size(); i++){
-<<<<<<< HEAD
-            if(mAdapter.isSelected(i)){
-=======
             if(mProjectsRecyclerViewAdapter.isSelected(i)){
->>>>>>> Module_7.5_End
                 Log.d(TAG, "deleteProjects: queueing up project for delete: " + mProjects.get(i).getProject_id());
                 deletedProjects.add(mProjects.get(i));
             }
         }
 
         mProjects.removeAll(deletedProjects);
-<<<<<<< HEAD
-=======
         mProjectsRecyclerViewAdapter.notifyDataSetChanged();
->>>>>>> Module_7.5_End
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -313,11 +230,7 @@ public class ProjectsFragment extends Fragment implements
                         }
 
                         // delete issues and attachments via IssuesFragment
-<<<<<<< HEAD
-                        mIIssues.deleteIssuesAndAttachments(issues, project);
-=======
                         mIIssues.deleteIssuesFromProject(issues, project);
->>>>>>> Module_7.5_End
                         deleteProjectAvatarFromStorage(project);
                     }
                     else{
@@ -326,10 +239,6 @@ public class ProjectsFragment extends Fragment implements
                 }
             });
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> Module_7.5_End
     }
 
     private void deleteProjectAvatarFromStorage(Project project){
@@ -358,9 +267,6 @@ public class ProjectsFragment extends Fragment implements
                 }
             });
         }
-<<<<<<< HEAD
-
-=======
     }
 
     public void hideToolbar(){
@@ -373,7 +279,6 @@ public class ProjectsFragment extends Fragment implements
         if(mToolbar != null){
             mToolbar.setVisibility(View.VISIBLE);
         }
->>>>>>> Module_7.5_End
     }
 
     @Override
@@ -401,13 +306,8 @@ public class ProjectsFragment extends Fragment implements
     }
 
     private void toggleSelection(int position) {
-<<<<<<< HEAD
-        mAdapter.toggleSelection(position);
-        int count = mAdapter.getSelectedItemCount();
-=======
         mProjectsRecyclerViewAdapter.toggleSelection(position);
         int count = mProjectsRecyclerViewAdapter.getSelectedItemCount();
->>>>>>> Module_7.5_End
 
         if (count == 0) {
             showToolbar();
@@ -460,19 +360,11 @@ public class ProjectsFragment extends Fragment implements
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             Log.d(TAG, "onDestroyActionMode: called.");
-<<<<<<< HEAD
-            mAdapter.clearSelection();
-=======
             mProjectsRecyclerViewAdapter.clearSelection();
->>>>>>> Module_7.5_End
             mActionMode = null;
             showToolbar();
         }
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> Module_7.5_End
 }
 
 

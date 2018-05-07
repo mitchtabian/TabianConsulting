@@ -1,27 +1,11 @@
 package courses.pluralsight.com.tabianconsulting.issues;
 
-<<<<<<< HEAD
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
-=======
-import android.content.Intent;
->>>>>>> Module_7.5_End
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-<<<<<<< HEAD
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MenuItem;
-=======
-import android.support.v7.app.AppCompatActivity;
->>>>>>> Module_7.5_End
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -30,37 +14,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-=======
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
->>>>>>> Module_7.5_End
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-<<<<<<< HEAD
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import courses.pluralsight.com.tabianconsulting.ChangePhotoDialog;
-import courses.pluralsight.com.tabianconsulting.R;
-import courses.pluralsight.com.tabianconsulting.SettingsActivity;
-import courses.pluralsight.com.tabianconsulting.models.Project;
-import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
-import de.hdodenhof.circleimageview.CircleImageView;
-=======
 
 import courses.pluralsight.com.tabianconsulting.R;
 import courses.pluralsight.com.tabianconsulting.models.Project;
 import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 
->>>>>>> Module_7.5_End
 
 /**
  * Created by User on 4/16/2018.
@@ -128,10 +94,6 @@ public class NewProjectActivity extends AppCompatActivity implements
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
-<<<<<<< HEAD
-                        hideProgressBar();
-=======
->>>>>>> Module_7.5_End
                         Intent intent = new Intent();
                         intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.created_new_project));
                         setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
@@ -139,13 +101,8 @@ public class NewProjectActivity extends AppCompatActivity implements
                     }
                     else{
                         Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.failed_create_new_project), Snackbar.LENGTH_LONG).show();
-<<<<<<< HEAD
-                        hideProgressBar();
-                    }
-=======
                     }
                     hideProgressBar();
->>>>>>> Module_7.5_End
                 }
             });
         }

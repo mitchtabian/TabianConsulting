@@ -1,26 +1,6 @@
 package courses.pluralsight.com.tabianconsulting.issues;
 
 import android.content.Context;
-<<<<<<< HEAD
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.Request;
-=======
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,17 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
->>>>>>> Module_7.5_End
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
 import courses.pluralsight.com.tabianconsulting.R;
 import courses.pluralsight.com.tabianconsulting.models.Issue;
-<<<<<<< HEAD
-import courses.pluralsight.com.tabianconsulting.models.Project;
-=======
->>>>>>> Module_7.5_End
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -51,17 +26,10 @@ public class IssuesRecyclerViewAdapter extends SelectableAdapter<RecyclerView.Vi
 
     private ArrayList<Issue> mIssues = new ArrayList<>();
     private Context mContext;
-<<<<<<< HEAD
-    private int[] mIcons ;
-    private RecyclerViewClickListener mRecyclerViewClickListener;
-
-    public IssuesRecyclerViewAdapter( Context context, ArrayList<Issue> issues, int[] icons, RecyclerViewClickListener recyclerViewClickListener) {
-=======
     private int[] mIcons;
     private RecyclerViewClickListener mRecyclerViewClickListener;
 
     public IssuesRecyclerViewAdapter(Context context, ArrayList<Issue> issues, int[] icons, RecyclerViewClickListener recyclerViewClickListener) {
->>>>>>> Module_7.5_End
         mIssues = issues;
         mContext = context;
         mIcons = icons;
@@ -141,28 +109,17 @@ public class IssuesRecyclerViewAdapter extends SelectableAdapter<RecyclerView.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener,
-<<<<<<< HEAD
-            View.OnLongClickListener{
-=======
             View.OnLongClickListener
     {
->>>>>>> Module_7.5_End
 
         private static final String TAG = "ViewHolder";
 
         CircleImageView icon;
         TextView summary, timestamp;
         CircleImageView priority;
-<<<<<<< HEAD
-
-        RecyclerViewClickListener listener;
-        LinearLayout parentLayout;
-
-=======
         LinearLayout parentLayout;
 
         RecyclerViewClickListener listener;
->>>>>>> Module_7.5_End
 
         public ViewHolder(View itemView, RecyclerViewClickListener listener) {
             super(itemView);
@@ -199,10 +156,7 @@ public class IssuesRecyclerViewAdapter extends SelectableAdapter<RecyclerView.Vi
         public void onItemClicked(int position);
         public boolean onItemLongClicked(int position);
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> Module_7.5_End
 }
 
 

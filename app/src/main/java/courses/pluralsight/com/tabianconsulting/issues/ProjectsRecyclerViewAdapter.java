@@ -1,10 +1,6 @@
 package courses.pluralsight.com.tabianconsulting.issues;
 
 import android.content.Context;
-<<<<<<< HEAD
-import android.content.Intent;
-=======
->>>>>>> Module_7.5_End
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-<<<<<<< HEAD
-import android.widget.ImageView;
-=======
->>>>>>> Module_7.5_End
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,18 +44,7 @@ public class ProjectsRecyclerViewAdapter extends SelectableAdapter<RecyclerView.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_project_list_item, parent, false);
         final ViewHolder holder = new ViewHolder(view, mRecyclerViewClickListener);
 
-<<<<<<< HEAD
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
-//                intent.putExtra(mContext.getString(R.string.intent_project), mFilteredProjects.get(holder.getAdapterPosition()));
-//                parent.getContext().startActivity(intent);
-//            }
-//        });
-=======
 
->>>>>>> Module_7.5_End
         return holder;
     }
 
@@ -171,18 +152,11 @@ public class ProjectsRecyclerViewAdapter extends SelectableAdapter<RecyclerView.
         }
     }
 
-<<<<<<< HEAD
-        public interface RecyclerViewClickListener {
-            public void onItemClicked(int position);
-            public boolean onItemLongClicked(int position);
-        }
-=======
     public interface RecyclerViewClickListener {
         public void onItemClicked(int position);
         public boolean onItemLongClicked(int position);
     }
 
->>>>>>> Module_7.5_End
 }
 
 

@@ -4,13 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-<<<<<<< HEAD
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
-=======
-import android.net.Uri;
->>>>>>> Module_7.5_End
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,10 +29,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-<<<<<<< HEAD
-import android.widget.ImageView;
-=======
->>>>>>> Module_7.5_End
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -62,22 +52,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-<<<<<<< HEAD
-import com.google.firebase.firestore.WriteBatch;
-=======
->>>>>>> Module_7.5_End
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
-<<<<<<< HEAD
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-=======
-import java.util.ArrayList;
->>>>>>> Module_7.5_End
 import java.util.List;
 
 import courses.pluralsight.com.tabianconsulting.ChangePhotoDialog;
@@ -90,29 +69,18 @@ import courses.pluralsight.com.tabianconsulting.utility.FilePaths;
 import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 import courses.pluralsight.com.tabianconsulting.utility.SpinnerResource;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> Module_7.5_End
 /**
  * Created by User on 4/23/2018.
  */
 
 public class IssueDetailsActivity extends AppCompatActivity implements
         View.OnClickListener,
-<<<<<<< HEAD
-        View.OnTouchListener,
-        ChangePhotoDialog.OnPhotoReceivedListener,
-        IIssueDetail,
-        AttachmentRecyclerViewAdapter.IsAttachmentsSelected,
-        IssuesPhotoUploader.AttachmentUploadCallback{
-=======
         IIssueDetail,
         ChangePhotoDialog.OnPhotoReceivedListener,
         IssuesPhotoUploader.AttachmentUploadCallback,
         AttachmentRecyclerViewAdapter.IsAttachmentsSelected
 {
->>>>>>> Module_7.5_End
 
     private static final String TAG = "IssueDetailsActivity";
     private static final int REQUEST_CODE = 1234;
@@ -120,11 +88,7 @@ public class IssueDetailsActivity extends AppCompatActivity implements
 
     //widgets
     private Spinner mIssueTypeSpinner, mPrioritySpinner, mStatusSpinner, mAssigneeSpinner;
-<<<<<<< HEAD
-    private AutoCompleteTextView mAssignToProject;
-=======
     private TextView mAssignToProject;
->>>>>>> Module_7.5_End
     private EditText mSummary, mDescription;
     private LinearLayout mAddAttachment, mRemoveAttachments;
     private RecyclerView mRecyclerView;
@@ -132,21 +96,12 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     private Button mSaveChanges;
 
     //vars
-<<<<<<< HEAD
-    private boolean mStoragePermissions;
-    private ArrayList<Project> mProjects = new ArrayList<>();
-    public ArrayList<String> mAttachments = new ArrayList<>();
-    private AttachmentRecyclerViewAdapter mAttachmentRecyclerViewAdapter;
-    private Issue mIssue;
-    private ArrayList<User> mUsers = new ArrayList<>();
-=======
     private ArrayList<Project> mProjects = new ArrayList<>();
     private Issue mIssue;
     private ArrayList<User> mUsers = new ArrayList<>();
     private boolean mStoragePermissions;
     private AttachmentRecyclerViewAdapter mAttachmentRecyclerViewAdapter;
     public ArrayList<String> mAttachments = new ArrayList<>();
->>>>>>> Module_7.5_End
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -169,28 +124,16 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         mAddAttachment.setOnClickListener(this);
         mSaveChanges.setOnClickListener(this);
         mRemoveAttachments.setOnClickListener(this);
-<<<<<<< HEAD
-        mAssignToProject.setOnTouchListener(this);
-=======
->>>>>>> Module_7.5_End
 
         if(getIssue()){
             setupActionBar();
             initIssueTypeSpinner();
             initPrioritySpinner();
             initStatusSpinner();
-<<<<<<< HEAD
-            initProjectAutoCompleteTextView();
-            initRecyclerView();
-            verifyStoragePermissions();
-            getEmployeeList();
-            setIssueDetails();
-=======
             getEmployeeList();
             setIssueDetails();
             initRecyclerView();
             verifyStoragePermissions();
->>>>>>> Module_7.5_End
         }
         else{
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
@@ -219,11 +162,7 @@ public class IssueDetailsActivity extends AppCompatActivity implements
                 .collection(getString(R.string.collection_attachments));
 
         newIssueRef.orderBy(getString(R.string.field_timestamp), com.google.firebase.firestore.Query.Direction.ASCENDING)
-<<<<<<< HEAD
-        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-=======
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
->>>>>>> Module_7.5_End
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -237,9 +176,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
                 }
             }
         });
-<<<<<<< HEAD
-
-=======
     }
 
     private void initRecyclerView(){
@@ -250,75 +186,18 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAttachmentRecyclerViewAdapter = new AttachmentRecyclerViewAdapter(this, mAttachments, this);
         mRecyclerView.setAdapter(mAttachmentRecyclerViewAdapter);
->>>>>>> Module_7.5_End
     }
 
     private void saveChanges(){
 
         hideSoftKeyboard();
 
-<<<<<<< HEAD
-        if(mAssignToProject.getText().toString().equals("")){
-            mAssignToProject.setError(getString(R.string.select_a_project));
-        }
-        else if(mSummary.getText().toString().equals("")){
-=======
         if(mSummary.getText().toString().equals("")){
->>>>>>> Module_7.5_End
             mSummary.setError(getString(R.string.required));
         }
         else{
             showProgressBar();
 
-<<<<<<< HEAD
-            // Find the Project id
-            String temp = "";
-            for(Project project : mProjects){
-                if(project.getName().equals(mAssignToProject.getText().toString())){
-                    temp = project.getProject_id();
-                    break;
-                }
-            }
-            final String projectId = temp;
-
-            if(projectId.equals("")){
-                Toast.makeText(this, "select a valid project", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                // get the document reference
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                DocumentReference newIssueRef = db
-                        .collection(getString(R.string.collection_projects))
-                        .document(projectId)
-                        .collection(getString(R.string.collection_issues))
-                        .document(mIssue.getIssue_id());
-
-                // Get user id of issue reporter
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                // Get the issue id
-                final String issueId = mIssue.getIssue_id();
-
-                // Create the issue and add send to database
-                Issue issue = new Issue();
-
-                issue.setAssignee(((SpinnerAdapter)mAssigneeSpinner.getAdapter()).getSelectedText());
-                issue.setDescription(mDescription.getText().toString());
-                issue.setIssue_id(issueId);
-                issue.setIssue_type(((SpinnerAdapter)mIssueTypeSpinner.getAdapter()).getSelectedText());
-                issue.setPriority(Issue.getPriorityInteger(((SpinnerAdapter)mPrioritySpinner.getAdapter()).getSelectedText()));
-                issue.setReporter(userId);
-                issue.setStatus((String)mStatusSpinner.getSelectedItem());
-                issue.setSummary(mSummary.getText().toString());
-                issue.setProject_id(projectId);
-                issue.setTime_reported(mIssue.getTime_reported());
-
-                newIssueRef.set(issue).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        hideProgressBar();
-=======
             // get the document reference
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -345,24 +224,11 @@ public class IssueDetailsActivity extends AppCompatActivity implements
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
->>>>>>> Module_7.5_End
                         Intent intent = new Intent();
                         intent.putExtra(getString(R.string.intent_snackbar_message), getString(R.string.issue_edit_success));
                         setResult(ResultCodes.SNACKBAR_RESULT_CODE, intent);
                         finish();
                     }
-<<<<<<< HEAD
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        hideProgressBar();
-                        Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.issue_edit_fail), Snackbar.LENGTH_LONG).show();
-                    }
-                });
-            }
-
-        }
-=======
                     else{
                         Snackbar.make(getCurrentFocus().getRootView(), getString(R.string.issue_edit_fail), Snackbar.LENGTH_LONG).show();
                     }
@@ -371,7 +237,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
             });
         }
 
->>>>>>> Module_7.5_End
     }
 
 
@@ -415,15 +280,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     }
 
     private void setStatusSpinner(){
-<<<<<<< HEAD
-        if(mIssue.getStatus().equals(Issue.STATUS[0])){
-            mStatusSpinner.setSelection(0);
-        }
-        else if(mIssue.getStatus().equals(Issue.STATUS[1])){
-            mStatusSpinner.setSelection(1);
-        }
-        else if(mIssue.getStatus().equals(Issue.STATUS[2])){
-=======
         if(mIssue.getStatus().equals(Issue.IN_PROGRESS)){
             mStatusSpinner.setSelection(0);
         }
@@ -431,7 +287,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
             mStatusSpinner.setSelection(1);
         }
         else if(mIssue.getStatus().equals(Issue.IDLE)){
->>>>>>> Module_7.5_End
             mStatusSpinner.setSelection(2);
         }
         else{
@@ -440,17 +295,10 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     }
 
     private void setIssueTypeSpinner(){
-<<<<<<< HEAD
-        if(mIssue.getIssue_type().equals(Issue.ISSUE_TYPE[0])){
-            mIssueTypeSpinner.setSelection(0);
-        }
-        else if(mIssue.getIssue_type().equals(Issue.ISSUE_TYPE[1])){
-=======
         if(mIssue.getIssue_type().equals(Issue.TASK)){
             mIssueTypeSpinner.setSelection(0);
         }
         else if(mIssue.getIssue_type().equals(Issue.BUG)){
->>>>>>> Module_7.5_End
             mIssueTypeSpinner.setSelection(1);
         }
     }
@@ -478,76 +326,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     }
 
 
-<<<<<<< HEAD
-    private void initRecyclerView(){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(layoutManager);
-        HorizontalSpacingItemDecorator itemDecorator = new HorizontalSpacingItemDecorator(RECYCLERVIEW_HORIZONTAL_SPACING);
-        mRecyclerView.addItemDecoration(itemDecorator);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAttachmentRecyclerViewAdapter = new AttachmentRecyclerViewAdapter(this, mAttachments, this);
-        mRecyclerView.setAdapter(mAttachmentRecyclerViewAdapter);
-    }
-
-
-    private void initProjectAutoCompleteTextView(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection(getString(R.string.collection_projects))
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            Log.d(TAG, "onComplete: got projects");
-                            int i = 0;
-                            String[] projects = new String[task.getResult().size()];
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Project project = document.toObject(Project.class);
-                                mProjects.add(project);
-                                projects[i] = project.getName();
-                                i++;
-                            }
-
-                            ArrayAdapter<String> adapter =
-                                    new ArrayAdapter<String>(IssueDetailsActivity.this, android.R.layout.simple_list_item_1, projects);
-                            mAssignToProject.setAdapter(adapter);
-                            initTextWatcher();
-                            hideSoftKeyboard();
-                        }
-                        else{
-                            Toast.makeText(IssueDetailsActivity.this, "error getting projects", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "onComplete: error getting project names.", task.getException());
-                        }
-                    }
-                });
-    }
-
-
-    private void initTextWatcher(){
-        mAssignToProject.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(editable.toString().equals("")){
-                    mAssignToProject.setError(getString(R.string.select_a_project));
-                }
-                else{
-                    mAssignToProject.setError(null);
-                }
-            }
-        });
-    }
-
-=======
->>>>>>> Module_7.5_End
     /**
      * Get a list of all employees
      * @throws NullPointerException
@@ -687,113 +465,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         }
     }
 
-<<<<<<< HEAD
-    private void removeAttachments(){
-        // get the attachments that are selected
-        List<Integer> selectedAttachments = mAttachmentRecyclerViewAdapter.getSelectedItems();
-
-        // iterate through and delete
-        for(int i : selectedAttachments){
-
-            if(!mAttachments.get(i).contains("tabianconsulting")){
-                buildSnackbar("One of the images you selected is still uploading");
-            }
-            else{
-                final int attachmentIndex = i;
-
-                // Get the url
-                final String url = mAttachments.get(i);
-
-                // Get the attachment name
-                int startingIndex = url.indexOf(mIssue.getIssue_id()) + mIssue.getIssue_id().length() + 3;
-                int endingIndex = url.indexOf("?");
-                final String attachmentFileName = url.substring(startingIndex, endingIndex);
-                Log.d(TAG, "removeAttachments: attachment name: " + attachmentFileName);
-
-                // Query Firestore for the attachment with the name above
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                db.collection(getString(R.string.collection_projects))
-                        .document(mIssue.getProject_id())
-                        .collection(getString(R.string.collection_issues))
-                        .document(mIssue.getIssue_id())
-                        .collection(getString(R.string.collection_attachments))
-                        .whereEqualTo(getString(R.string.field_name), attachmentFileName)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                                        String id = documentSnapshot.getId();
-                                        Log.d(TAG, "onComplete: deleting attachment with id: " + id);
-                                        deleteAttachmentDocument(url, attachmentIndex, id, attachmentFileName);
-                                    }
-                                }
-                                else{
-                                    Log.d(TAG, "onComplete: error finding attachment.");
-                                }
-                            }
-                        });
-
-            }
-        }
-    }
-
-    private void deleteAttachmentDocument(final String url, final int attachmentIndex,
-                                          final String attachmentId, final String attachmentFileName){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection(getString(R.string.collection_projects))
-                .document(mIssue.getProject_id())
-                .collection(getString(R.string.collection_issues))
-                .document(mIssue.getIssue_id())
-                .collection(getString(R.string.collection_attachments))
-                .document(attachmentId)
-                .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Log.d(TAG, "onComplete: deleted attachment: " + attachmentId);
-                    deleteAttachmentFromStorage(attachmentFileName);
-                    mAttachments.remove(url);
-                    mAttachmentRecyclerViewAdapter.notifyDataSetChanged();
-                }
-                else{
-                    Log.d(TAG, "onComplete: failed to delete attachment: " + attachmentId);
-                }
-            }
-        });
-    }
-
-    private void deleteAttachmentFromStorage(final String filename){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        StorageReference storageRef = storage.getReference();
-
-        FilePaths filePaths = new FilePaths();
-        StorageReference filePathRef = storageRef.child(filePaths.FIREBASE_ISSUE_IMAGE_STORAGE
-                + File.separator + mIssue.getIssue_id()
-                + File.separator + filename);
-
-        Log.d(TAG, "deleteAttachmentFromStorage: removing from storage: " + filePathRef);
-
-        filePathRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: SUCCESSFULLY deleted file: " + filename);
-                mAttachmentRecyclerViewAdapter.clearSelection();
-                isSelected(false);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d(TAG, "onSuccess: FAILED to delete file: " + filename);
-            }
-        });
-    }
-=======
->>>>>>> Module_7.5_End
 
     @Override
     protected void onStart() {
@@ -808,23 +479,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
-<<<<<<< HEAD
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-
-        switch (view.getId()){
-
-            case R.id.assign_to_project:{
-                showSoftKeyboard(view);
-                mAssignToProject.showDropDown();
-                return true;
-            }
-
-        }
-        return false;
-    }
-=======
->>>>>>> Module_7.5_End
 
     public void showSoftKeyboard(View view) {
         if (view.requestFocus()) {
@@ -851,8 +505,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< HEAD
-=======
 
     @Override
     public void showProgressBar(){
@@ -901,19 +553,13 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         Snackbar.make(getCurrentFocus().getRootView(), message, Snackbar.LENGTH_LONG).show();
     }
 
->>>>>>> Module_7.5_End
     /**
      * Generalized method for asking permission. Can pass any array of permissions
      */
     public void verifyStoragePermissions(){
         Log.d(TAG, "verifyPermissions: asking user for permissions.");
-<<<<<<< HEAD
-        String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-=======
         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
->>>>>>> Module_7.5_End
                 Manifest.permission.CAMERA};
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 permissions[0] ) == PackageManager.PERMISSION_GRANTED
@@ -932,33 +578,11 @@ public class IssueDetailsActivity extends AppCompatActivity implements
     }
 
     @Override
-<<<<<<< HEAD
-    public void showProgressBar(){
-        if(mProgressBar != null){
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            mProgressBar.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void hideProgressBar(){
-        if(mProgressBar != null){
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            mProgressBar.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void getImagePath(Uri imagePath) {
-        if( !imagePath.toString().equals("")){
-=======
     public void getImagePath(Uri imagePath) {
         if( !imagePath.toString().equals("")){
 
             // Start Image Upload Process
             Log.d(TAG, "getImagePath: path: " + imagePath);
->>>>>>> Module_7.5_End
             IssuesPhotoUploader uploader = new IssuesPhotoUploader(this, mIssue.getProject_id(), mIssue.getIssue_id(), this);
             uploader.uploadAttachment(imagePath);
             mAttachments.add(imagePath.toString());
@@ -966,35 +590,17 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         }
     }
 
-<<<<<<< HEAD
-    @Override
-    public void updateImageUrl(String downloadUrl, String imagePath){
-        mAttachments.remove(imagePath);
-=======
 
     @Override
     public void updateImageUrl(String downloadUrl, String localImagePath) {
 
         // Update the RecyclerView with attachments
         mAttachments.remove(localImagePath);
->>>>>>> Module_7.5_End
         mAttachments.add(downloadUrl);
         mAttachmentRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
-<<<<<<< HEAD
-    public void onBackPressed() {
-        super.onBackPressed();
-        if(mProgressBar.getVisibility() == View.VISIBLE){
-            hideProgressBar();
-        }
-        showStatusBar();
-    }
-
-    @Override
-=======
->>>>>>> Module_7.5_End
     public void inflateFullScreenImageFragment(final Object imageResource) {
 
         hideStatusBar();
@@ -1009,28 +615,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         transaction.commit();
     }
 
-<<<<<<< HEAD
-    private void hideStatusBar(){
-        // Hide Status Bar
-        View decorView = getWindow().getDecorView();
-        // Hide Status Bar.
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
-    private void showStatusBar(){
-        View decorView = getWindow().getDecorView();
-        // Show Status Bar.
-        int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
-    public void buildSnackbar(String message) {
-        Snackbar.make(getCurrentFocus().getRootView(), message, Snackbar.LENGTH_LONG).show();
-    }
-
-=======
->>>>>>> Module_7.5_End
     /**
      * sets the trash-can and "add attachment" visibilities
      * @param isSelected
@@ -1054,8 +638,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         mAddAttachment.setVisibility(View.GONE);
         mRemoveAttachments.setVisibility(View.VISIBLE);
     }
-<<<<<<< HEAD
-=======
 
     private void removeAttachments(){
         // get the attachments that are selected
@@ -1161,7 +743,6 @@ public class IssueDetailsActivity extends AppCompatActivity implements
         });
     }
 
->>>>>>> Module_7.5_End
 }
 
 

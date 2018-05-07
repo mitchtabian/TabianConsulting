@@ -3,18 +3,10 @@ package courses.pluralsight.com.tabianconsulting.issues;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-<<<<<<< HEAD
-import android.graphics.Bitmap;
-=======
->>>>>>> Module_7.5_End
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-<<<<<<< HEAD
-import android.support.design.widget.TextInputLayout;
-=======
->>>>>>> Module_7.5_End
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -28,22 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-<<<<<<< HEAD
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.nostra13.universalimageloader.core.ImageLoader;
-=======
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
->>>>>>> Module_7.5_End
 
 import java.util.HashMap;
 
@@ -71,13 +51,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements
 
     //vars
     private Project mProject;
-<<<<<<< HEAD
-    private boolean mStoragePermissions;
-    private Uri mSelectedImageUri;
-=======
     private Uri mSelectedImageUri;
     private boolean mStoragePermissions;
->>>>>>> Module_7.5_End
 
 
     @Override
@@ -100,13 +75,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements
     }
 
     private void setProjectDetails(){
-<<<<<<< HEAD
-            RequestOptions requestOptions = new RequestOptions()
-                    .placeholder(R.drawable.default_avatar);
-=======
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.default_avatar);
->>>>>>> Module_7.5_End
 
         Glide.with(this)
                 .load(mProject.getAvatar())
@@ -236,13 +206,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements
      */
     public void verifyStoragePermissions(){
         Log.d(TAG, "verifyPermissions: asking user for permissions.");
-<<<<<<< HEAD
-        String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-=======
         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
->>>>>>> Module_7.5_End
                 Manifest.permission.CAMERA};
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 permissions[0] ) == PackageManager.PERMISSION_GRANTED
@@ -274,13 +239,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements
                     .apply(requestOptions)
                     .into(mAvatar);
 
-<<<<<<< HEAD
-//            ImageLoader.getInstance().displayImage(imagePath.toString(), mAvatar);
         }
-
-=======
-        }
->>>>>>> Module_7.5_End
     }
 }
 

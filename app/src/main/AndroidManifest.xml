@@ -58,13 +58,8 @@
         <activity android:name=".AdminActivity"/>
         <activity android:name=".issues.IssuesActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".issues.NewProjectActivity"/>
-<<<<<<< HEAD
-        <activity android:name=".issues.ProjectDetailsActivity"/>
-        <activity android:name=".issues.NewIssueActivity"/>
-=======
         <activity android:name=".issues.NewIssueActivity"/>
         <activity android:name=".issues.ProjectDetailsActivity"/>
->>>>>>> Module_7.5_End
         <activity android:name=".issues.IssueDetailsActivity"/>
 
 

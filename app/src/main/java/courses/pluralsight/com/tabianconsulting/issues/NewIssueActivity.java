@@ -4,11 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-<<<<<<< HEAD
-import android.graphics.Bitmap;
-import android.net.Uri;
-=======
->>>>>>> Module_7.5_End
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,11 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-<<<<<<< HEAD
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-=======
->>>>>>> Module_7.5_End
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -33,10 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-<<<<<<< HEAD
-import android.widget.LinearLayout;
-=======
->>>>>>> Module_7.5_End
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,10 +33,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-<<<<<<< HEAD
-=======
 import com.google.firebase.firestore.CollectionReference;
->>>>>>> Module_7.5_End
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -65,10 +48,7 @@ import courses.pluralsight.com.tabianconsulting.models.Project;
 import courses.pluralsight.com.tabianconsulting.utility.ResultCodes;
 import courses.pluralsight.com.tabianconsulting.utility.SpinnerResource;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> Module_7.5_End
 /**
  * Created by User on 4/17/2018.
  */
@@ -90,10 +70,6 @@ public class NewIssueActivity extends AppCompatActivity implements
 
 
     //vars
-<<<<<<< HEAD
-    private boolean mStoragePermissions;
-=======
->>>>>>> Module_7.5_End
     private ArrayList<Project> mProjects = new ArrayList<>();
 
 
@@ -118,10 +94,6 @@ public class NewIssueActivity extends AppCompatActivity implements
         initIssueTypeSpinner();
         initPrioritySpinner();
         initProjectAutoCompleteTextView();
-<<<<<<< HEAD
-        verifyStoragePermissions();
-=======
->>>>>>> Module_7.5_End
     }
 
     private void setupActionBar(){
@@ -130,20 +102,12 @@ public class NewIssueActivity extends AppCompatActivity implements
         }
     }
 
-<<<<<<< HEAD
-
-    private void initProjectAutoCompleteTextView(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection(getString(R.string.collection_projects))
-=======
     private void initProjectAutoCompleteTextView(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         CollectionReference projectsRef = db.collection(getString(R.string.collection_projects));
 
         projectsRef
->>>>>>> Module_7.5_End
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -309,10 +273,7 @@ public class NewIssueActivity extends AppCompatActivity implements
                 });
             }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> Module_7.5_End
         }
     }
 
@@ -346,38 +307,9 @@ public class NewIssueActivity extends AppCompatActivity implements
                 finish();
                 break;
             }
-<<<<<<< HEAD
-
-            case R.id.add_attachment:{
-                if(mStoragePermissions){
-                    ChangePhotoDialog dialog = new ChangePhotoDialog();
-                    dialog.show(getSupportFragmentManager(), getString(R.string.dialog_change_photo));
-                }else{
-                    verifyStoragePermissions();
-                }
-                break;
-            }
         }
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-
-        switch (view.getId()){
-            case R.id.assign_to_project:{
-                showSoftKeyboard(view);
-                mAssignToProject.showDropDown();
-                return true;
-            }
-
-        }
-        return false;
-    }
-=======
-        }
-    }
-
->>>>>>> Module_7.5_End
 
     public void showSoftKeyboard(View view) {
         if (view.requestFocus()) {
@@ -395,32 +327,6 @@ public class NewIssueActivity extends AppCompatActivity implements
         }
     }
 
-<<<<<<< HEAD
-    /**
-     * Generalized method for asking permission. Can pass any array of permissions
-     */
-    public void verifyStoragePermissions(){
-        Log.d(TAG, "verifyPermissions: asking user for permissions.");
-        String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA};
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                permissions[0] ) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                permissions[1] ) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                permissions[2] ) == PackageManager.PERMISSION_GRANTED) {
-            mStoragePermissions = true;
-        } else {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissions,
-                    REQUEST_CODE
-            );
-        }
-    }
-
-=======
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -435,7 +341,6 @@ public class NewIssueActivity extends AppCompatActivity implements
         }
         return false;
     }
->>>>>>> Module_7.5_End
 }
 
 

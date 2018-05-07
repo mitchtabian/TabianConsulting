@@ -1,43 +1,19 @@
 package courses.pluralsight.com.tabianconsulting.issues;
 
 import android.content.Context;
-<<<<<<< HEAD
-import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-=======
->>>>>>> Module_7.5_End
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-<<<<<<< HEAD
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
-=======
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
->>>>>>> Module_7.5_End
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.DecodeFormat;
-<<<<<<< HEAD
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.FutureTarget;
-=======
-import com.bumptech.glide.load.engine.GlideException;
->>>>>>> Module_7.5_End
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
@@ -128,28 +104,6 @@ public class FullScreenImageFragment extends Fragment
         mIIssueDetail = (IIssueDetail) getActivity();
     }
 
-<<<<<<< HEAD
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if(((AppCompatActivity)getActivity()).getSupportActionBar().isShowing()){
-//            ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-//        }
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-//    }
-=======
->>>>>>> Module_7.5_End
 }
 
 
